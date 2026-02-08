@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Download, FolderOpen, Github, Linkedin } from "lucide-react";
 import heroImage from "@/assets/pronoy-hero.jpg";
+import resumePdf from "@/assets/Resume.pdf";
 
 const roles = [
   "Frontend Developer",
@@ -34,7 +35,7 @@ const HeroSection = () => {
           }
         }
       },
-      isDeleting ? 50 : 100
+      isDeleting ? 50 : 100,
     );
     return () => clearTimeout(timeout);
   }, [displayText, isDeleting, currentRole]);
@@ -50,7 +51,10 @@ const HeroSection = () => {
 
       {/* Floating orbs */}
       <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-glow-blue/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+      <div
+        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-glow-blue/10 rounded-full blur-3xl animate-pulse"
+        style={{ animationDelay: "1s" }}
+      />
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -64,8 +68,14 @@ const HeroSection = () => {
             {/* Glow rings - BIGGER */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-80 h-80 md:w-[420px] md:h-[420px] lg:w-[480px] lg:h-[480px] border border-primary/20 rounded-full animate-pulse" />
-              <div className="absolute w-88 h-88 md:w-[480px] md:h-[480px] lg:w-[540px] lg:h-[540px] border border-primary/10 rounded-full" style={{ animationDelay: "0.5s" }} />
-              <div className="absolute w-96 h-96 md:w-[540px] md:h-[540px] lg:w-[600px] lg:h-[600px] border border-primary/5 rounded-full" style={{ animationDelay: "1s" }} />
+              <div
+                className="absolute w-88 h-88 md:w-[480px] md:h-[480px] lg:w-[540px] lg:h-[540px] border border-primary/10 rounded-full"
+                style={{ animationDelay: "0.5s" }}
+              />
+              <div
+                className="absolute w-96 h-96 md:w-[540px] md:h-[540px] lg:w-[600px] lg:h-[600px] border border-primary/5 rounded-full"
+                style={{ animationDelay: "1s" }}
+              />
             </div>
 
             {/* Orbiting icons */}
@@ -78,9 +88,18 @@ const HeroSection = () => {
                 <div className="relative w-80 h-80 md:w-[420px] md:h-[420px] lg:w-[480px] lg:h-[480px]">
                   {/* React icon */}
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-12 h-12 glass-card flex items-center justify-center">
-                    <svg className="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="currentColor">
+                    <svg
+                      className="w-6 h-6 text-primary"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
                       <path d="M12 13.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z" />
-                      <path fillRule="evenodd" d="M12 21c6.627 0 12-4.03 12-9s-5.373-9-12-9S0 7.03 0 12s5.373 9 12 9Zm0-2c5.523 0 10-3.134 10-7s-4.477-7-10-7-10 3.134-10 7 4.477 7 10 7Z" clipRule="evenodd" opacity=".5" />
+                      <path
+                        fillRule="evenodd"
+                        d="M12 21c6.627 0 12-4.03 12-9s-5.373-9-12-9S0 7.03 0 12s5.373 9 12 9Zm0-2c5.523 0 10-3.134 10-7s-4.477-7-10-7-10 3.134-10 7 4.477 7 10 7Z"
+                        clipRule="evenodd"
+                        opacity=".5"
+                      />
                     </svg>
                   </div>
                   {/* JS icon */}
@@ -89,7 +108,11 @@ const HeroSection = () => {
                   </div>
                   {/* Tailwind icon */}
                   <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-12 h-12 glass-card flex items-center justify-center">
-                    <svg className="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="currentColor">
+                    <svg
+                      className="w-6 h-6 text-primary"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
                       <path d="M12 6c-2.67 0-4.33 1.33-5 4 1-1.33 2.17-1.83 3.5-1.5.76.19 1.31.74 1.91 1.35.98 1 2.09 2.15 4.59 2.15 2.67 0 4.33-1.33 5-4-1 1.33-2.17 1.83-3.5 1.5-.76-.19-1.31-.74-1.91-1.35C15.61 7.15 14.5 6 12 6Zm-5 6c-2.67 0-4.33 1.33-5 4 1-1.33 2.17-1.83 3.5-1.5.76.19 1.31.74 1.91 1.35.98 1 2.09 2.15 4.59 2.15 2.67 0 4.33-1.33 5-4-1 1.33-2.17 1.83-3.5 1.5-.76-.19-1.31-.74-1.91-1.35C10.61 13.15 9.5 12 7 12Z" />
                     </svg>
                   </div>
@@ -170,16 +193,17 @@ const HeroSection = () => {
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8"
             >
               <motion.a
-                href="#contact"
+                href="#projects"
                 className="btn-glow flex items-center justify-center gap-2 text-primary-foreground"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
               >
                 <FolderOpen className="w-5 h-5" />
-                Contact Me
+                View My Work
               </motion.a>
               <motion.a
-                href="#"
+                href={resumePdf}
+                download="Pronoy_Saha_Resume.pdf"
                 className="btn-glass flex items-center justify-center gap-2"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}

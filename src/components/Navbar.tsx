@@ -62,7 +62,7 @@ const Navbar = () => {
               href="#home"
               className="text-xl md:text-2xl font-mono font-bold text-primary text-glow-sm"
             >
-              &lt;PRONOY /&gt;
+              &lt;PRONOY/&gt;
             </NavLink>
           </motion.div>
 

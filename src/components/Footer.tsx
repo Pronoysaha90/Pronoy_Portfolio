@@ -19,8 +19,16 @@ const contactLinks = [
 
 const socialLinks = [
   { icon: Github, href: "https://github.com/Pronoysaha90", label: "GitHub" },
-  { icon: Linkedin, href: "https://linkedin.com/in/pronoysaha90", label: "LinkedIn" },
-  { icon: Globe, href: "https://pronoysaha90.github.io/Portfolio_Pronoy/", label: "Website" },
+  {
+    icon: Linkedin,
+    href: "https://linkedin.com/in/pronoysaha90",
+    label: "LinkedIn",
+  },
+  {
+    icon: Globe,
+    href: "https://pronoysaha90.github.io/Portfolio_Pronoy/",
+    label: "Website",
+  },
 ];
 
 const Footer = () => {
@@ -38,11 +46,24 @@ const Footer = () => {
               href="#home"
               className="text-2xl font-mono font-bold text-foreground mb-4 block"
             >
-              <span className="text-primary">Pronoy</span> Saha
+              {/* <span className="text-primary">Pronoy</span> Saha */}
+              {/* Logo */}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400 }}
+              >
+                <NavLink
+                  href="#home"
+                  className="text-xl md:text-2xl font-mono font-bold text-primary text-glow-sm"
+                >
+                  &lt;PRONOY/&gt;
+                </NavLink>
+              </motion.div>
             </NavLink>
             <p className="text-muted-foreground text-sm mb-6 max-w-xs">
-              Web Developer specializing in React.js and modern web technologies.
-              Building beautiful, performant, and user-friendly applications.
+              Web Developer specializing in React.js and modern web
+              technologies. Building beautiful, performant, and user-friendly
+              applications.
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social) => (
@@ -117,7 +138,9 @@ const Footer = () => {
             © {new Date().getFullYear()} Pronoy Saha. All rights reserved.
           </p>
           <p className="text-sm text-muted-foreground flex items-center gap-1">
-            Made with <Heart className="w-4 h-4 text-destructive fill-destructive" /> in Bangladesh
+            Made with{" "}
+            <Heart className="w-4 h-4 text-destructive fill-destructive" /> in
+            Bangladesh
           </p>
         </div>
       </div>
