@@ -7,21 +7,6 @@ const ProjectsSection = () => {
   // Show first 4 projects on home page
   const featuredProjects = projects.slice(0, 4);
 
-  const scrollToProjects = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    const projectsSection = document.getElementById('projects');
-    if (projectsSection) {
-      const navbarHeight = 80; // Account for fixed navbar
-      const elementPosition = projectsSection.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
-  };
-
   return (
     <section id="projects" className="py-20 relative">
       <div className="absolute inset-0 grid-pattern opacity-30" />
@@ -58,24 +43,29 @@ const ProjectsSection = () => {
                   transition={{ duration: 0.3 }}
                 >
                   {/* Project Image */}
-                  <div className="relative h-48 bg-secondary/50 overflow-hidden">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <Folder className="w-16 h-16 text-primary/30" />
+                  <div className="relative h-48 overflow-hidden">
+                    {/* Fallback icon (kept) */}
+                    <div className="absolute inset-0 flex items-center justify-center z-0">
+                      <Folder className="w-16 h-16 text-primary/20" />
                     </div>
+
+                    {/* Image */}
                     <img
                       src={project.images[0]}
                       alt={project.title}
-                      className="w-full h-full object-cover opacity-0"
+                      className="w-full h-full object-cover relative z-10"
                     />
+
                     {/* Category badge */}
-                    <div className="absolute top-3 left-3">
+                    <div className="absolute top-3 left-3 z-20">
                       <span className="px-3 py-1 text-xs font-medium bg-primary/20 text-primary rounded-full border border-primary/30 backdrop-blur-sm">
                         {project.category}
                       </span>
                     </div>
-                    {/* Hover overlay */}
+
+                    {/* Hover overlay (UNCHANGED) */}
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4"
+                      className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4 z-20"
                     >
                       <div className="flex gap-3">
                         {project.live !== "#" && (
@@ -84,7 +74,7 @@ const ProjectsSection = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
-                            className="w-10 h-10 glass-card flex items-center justify-center text-primary hover:bg-primary/20 transition-colors"
+                            className="w-10 h-10 glass-card flex items-center justify-center text-primary hover:bg-primary/20"
                             whileHover={{ scale: 1.1 }}
                           >
                             <ExternalLink className="w-5 h-5" />
@@ -96,7 +86,7 @@ const ProjectsSection = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
-                            className="w-10 h-10 glass-card flex items-center justify-center text-primary hover:bg-primary/20 transition-colors"
+                            className="w-10 h-10 glass-card flex items-center justify-center text-primary hover:bg-primary/20"
                             whileHover={{ scale: 1.1 }}
                           >
                             <Github className="w-5 h-5" />
@@ -115,7 +105,6 @@ const ProjectsSection = () => {
                       {project.shortDescription}
                     </p>
 
-                    {/* Tech tags */}
                     <div className="flex flex-wrap gap-2">
                       {project.tech.slice(0, 3).map((tech) => (
                         <span
@@ -139,13 +128,7 @@ const ProjectsSection = () => {
         </div>
 
         {/* View All Projects Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="flex justify-center"
-        >
+        <div className="flex justify-center">
           <Link to="/projects">
             <motion.button
               className="btn-glass flex items-center gap-3 px-8 py-4 text-lg group"
@@ -153,15 +136,10 @@ const ProjectsSection = () => {
               whileTap={{ scale: 0.98 }}
             >
               View All Projects
-              <motion.span
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                <ArrowRight className="w-5 h-5 group-hover:text-primary transition-colors" />
-              </motion.span>
+              <ArrowRight className="w-5 h-5 group-hover:text-primary" />
             </motion.button>
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

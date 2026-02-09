@@ -9,6 +9,7 @@ const Projects = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navbar />
+
       <main className="pt-24 pb-20">
         <div className="container mx-auto px-6">
           {/* Header */}
@@ -25,9 +26,11 @@ const Projects = () => {
               <ArrowLeft className="w-4 h-4" />
               Back to Home
             </Link>
+
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               All <span className="text-primary text-glow">Projects</span>
             </h1>
+
             <p className="text-muted-foreground text-lg max-w-2xl">
               A comprehensive collection of my work, showcasing various technologies and solutions.
             </p>
@@ -49,28 +52,29 @@ const Projects = () => {
                     transition={{ duration: 0.3 }}
                   >
                     {/* Project Image */}
-                    <div className="relative h-48 bg-secondary/50 overflow-hidden">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <Folder className="w-16 h-16 text-primary/30" />
+                    <div className="relative h-48 overflow-hidden">
+                      {/* Fallback icon */}
+                      <div className="absolute inset-0 flex items-center justify-center z-0">
+                        <Folder className="w-16 h-16 text-primary/20" />
                       </div>
+
+                      {/* Image */}
                       <img
                         src={project.images[0]}
                         alt={project.title}
-                        className="w-full h-full object-cover opacity-0 group-hover:opacity-10 transition-opacity"
+                        className="w-full h-full object-cover relative z-10"
                       />
-                      {/* Gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-                      
+
                       {/* Category badge */}
-                      <div className="absolute top-3 left-3">
+                      <div className="absolute top-3 left-3 z-20">
                         <span className="px-3 py-1 text-xs font-medium bg-primary/20 text-primary rounded-full border border-primary/30 backdrop-blur-sm">
                           {project.category}
                         </span>
                       </div>
 
-                      {/* Hover overlay with links */}
+                      {/* Hover overlay (UNCHANGED) */}
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end justify-center pb-4"
+                        className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end justify-center pb-4 z-20"
                       >
                         <div className="flex gap-3">
                           {project.live !== "#" && (
@@ -79,7 +83,7 @@ const Projects = () => {
                               target="_blank"
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
-                              className="w-10 h-10 glass-card flex items-center justify-center text-primary hover:bg-primary/20 transition-colors"
+                              className="w-10 h-10 glass-card flex items-center justify-center text-primary hover:bg-primary/20"
                               whileHover={{ scale: 1.1 }}
                             >
                               <ExternalLink className="w-5 h-5" />
@@ -91,7 +95,7 @@ const Projects = () => {
                               target="_blank"
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
-                              className="w-10 h-10 glass-card flex items-center justify-center text-primary hover:bg-primary/20 transition-colors"
+                              className="w-10 h-10 glass-card flex items-center justify-center text-primary hover:bg-primary/20"
                               whileHover={{ scale: 1.1 }}
                             >
                               <Github className="w-5 h-5" />
@@ -110,7 +114,6 @@ const Projects = () => {
                         {project.shortDescription}
                       </p>
 
-                      {/* Tech tags */}
                       <div className="flex flex-wrap gap-2">
                         {project.tech.slice(0, 3).map((tech) => (
                           <span
@@ -134,6 +137,7 @@ const Projects = () => {
           </div>
         </div>
       </main>
+
       <Footer />
     </div>
   );

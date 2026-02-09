@@ -1,3 +1,9 @@
+import fashionShopImg from "@/assets/fashionshop.png";
+import rollingRepairImg from "@/assets/rolling-repair.png";
+import travelBookingImg from "@/assets/travel-booking.png";
+import portfolioImg from "@/assets/pronoy-hero.jpg";
+// import beeImg from "@/assets/bee.svg";
+
 export interface Project {
   id: string;
   title: string;
@@ -21,186 +27,169 @@ export const projects: Project[] = [
     shortDescription:
       "Developed a responsive e-commerce frontend with dark-mode UI, interactive components, and reusable React components.",
     fullDescription:
-      "A modern e-commerce platform built with React.js featuring a sleek dark-mode UI. The application includes interactive components like image sliders, countdown timers, and advanced product filters. Built with a focus on reusability and scalability, the component architecture allows for easy maintenance and future enhancements.",
+      "A modern e-commerce platform built with React.js featuring a sleek dark-mode UI. The application includes interactive components like image sliders, countdown timers, and advanced product filters.",
     tech: ["React.js", "Tailwind CSS", "JavaScript", "Framer Motion"],
     live: "https://react-fashion-shop-three.vercel.app/",
     github: "https://github.com/Pronoysaha90",
     images: [
-      "/placeholder.svg",
-      "/placeholder.svg",
-      "/placeholder.svg",
+      fashionShopImg,
+      fashionShopImg,
+      fashionShopImg,
     ],
     features: [
       "Dark mode UI with smooth theme switching",
-      "Interactive product slider with auto-play",
-      "Advanced filtering and sorting system",
-      "Responsive design for all devices",
-      "Countdown timers for flash sales",
-      "Wishlist and cart functionality",
+      "Interactive product slider",
+      "Advanced filtering system",
+      "Responsive design",
     ],
     challenges: [
-      "Implementing smooth animations without affecting performance",
-      "Building a scalable component architecture",
-      "Optimizing images for fast loading",
+      "Smooth animation performance",
+      "Reusable component structure",
     ],
     duration: "2 months",
     role: "Frontend Developer",
     category: "E-commerce",
   },
+
   {
     id: "rolling-repair",
     title: "Rolling Repair Website",
     shortDescription:
-      "Developed a responsive financial advisory website using WordPress and Elementor with SEO optimization.",
+      "Developed a responsive business website with SEO optimization.",
     fullDescription:
-      "A professional service website built for Rolling Repair featuring clean design and intuitive navigation. The website was developed using WordPress and Elementor Pro, focusing on SEO best practices and conversion optimization. The site includes contact forms, service showcases, and a blog section for content marketing.",
-    tech: ["WordPress", "Elementor Pro", "JavaScript", "CSS3"],
+      "A professional service website built with WordPress and Elementor Pro focusing on performance and SEO.",
+    tech: ["WordPress", "Elementor", "CSS", "JavaScript"],
     live: "https://rollingrepair.org",
     github: null,
     images: [
-      "/placeholder.svg",
-      "/placeholder.svg",
-      "/placeholder.svg",
+      rollingRepairImg,
+      rollingRepairImg,
     ],
     features: [
-      "Custom Elementor widgets and templates",
-      "SEO-optimized page structure",
-      "Contact form with email integration",
-      "Service showcase with pricing tables",
-      "Blog section with categories",
-      "Mobile-first responsive design",
+      "SEO optimized pages",
+      "Service showcase",
+      "Contact forms",
+      "Mobile responsive",
     ],
     challenges: [
-      "Customizing Elementor for specific design requirements",
-      "Implementing advanced SEO strategies",
-      "Optimizing site speed on shared hosting",
+      "Page speed optimization",
+      "Custom Elementor layouts",
     ],
     duration: "1 month",
     role: "Web Developer",
     category: "Business",
   },
+
   {
     id: "travel-booking",
     title: "Travel Booking Website",
     shortDescription:
-      "Built a responsive travel booking website with modern UI and optimized performance.",
+      "Built a modern travel booking website with optimized performance.",
     fullDescription:
-      "A comprehensive travel booking platform designed to provide seamless user experience for travel enthusiasts. Built with WordPress, the site features destination showcases, tour packages, booking forms, and customer testimonials. Special attention was given to visual appeal and loading performance.",
-    tech: ["WordPress", "HTML5", "CSS3", "JavaScript"],
+      "A travel platform showcasing destinations, tour packages, and booking forms.",
+    tech: ["WordPress", "HTML", "CSS", "JavaScript"],
     live: "https://bluegemtravels.com/",
     github: null,
     images: [
-      "/placeholder.svg",
-      "/placeholder.svg",
-      "/placeholder.svg",
+      travelBookingImg,
+      travelBookingImg,
     ],
     features: [
-      "Interactive destination gallery",
-      "Tour package comparison",
-      "Online booking system",
-      "Customer review section",
-      "Newsletter subscription",
-      "Multi-language support ready",
+      "Destination gallery",
+      "Tour packages",
+      "Booking forms",
+      "Testimonials",
     ],
     challenges: [
-      "Creating engaging visual presentations",
-      "Implementing booking workflow",
-      "Performance optimization with heavy imagery",
+      "Handling large images",
+      "UX optimization",
     ],
     duration: "6 weeks",
     role: "Web Developer",
     category: "Travel",
   },
+
   {
     id: "portfolio-v1",
     title: "Personal Portfolio v1",
     shortDescription:
-      "Designed and developed my first personal portfolio website showcasing projects and skills.",
+      "My first personal portfolio showcasing projects and skills.",
     fullDescription:
-      "My initial personal portfolio built to showcase my development skills and projects. Features a clean, minimalist design with smooth scrolling, project showcases, and contact functionality. Built from scratch using vanilla HTML, CSS, and JavaScript to demonstrate fundamental web development skills.",
-    tech: ["HTML5", "CSS3", "JavaScript", "GSAP"],
+      "A minimalist portfolio built using HTML, CSS, and JavaScript.",
+    tech: ["HTML", "CSS", "JavaScript", "GSAP"],
     live: "#",
     github: "https://github.com/Pronoysaha90",
     images: [
-      "/placeholder.svg",
-      "/placeholder.svg",
+      portfolioImg,
+      portfolioImg,
     ],
     features: [
-      "Smooth scroll navigation",
-      "Animated skill bars",
-      "Project carousel",
-      "Contact form with validation",
-      "Responsive grid layout",
+      "Smooth scrolling",
+      "Project showcase",
+      "Responsive layout",
     ],
     challenges: [
-      "Implementing smooth animations with vanilla JS",
-      "Cross-browser compatibility",
-      "Creating engaging hover effects",
+      "Animation timing",
+      "Cross-browser support",
     ],
     duration: "3 weeks",
-    role: "Full Stack Developer",
+    role: "Frontend Developer",
     category: "Portfolio",
   },
-  {
-    id: "task-manager",
-    title: "Task Manager App",
-    shortDescription:
-      "A productivity app for managing daily tasks with drag-and-drop functionality.",
-    fullDescription:
-      "A feature-rich task management application built with React. Users can create, organize, and track tasks with an intuitive drag-and-drop interface. Includes features like task priorities, due dates, categories, and progress tracking. Data persistence is handled with local storage for offline capability.",
-    tech: ["React.js", "TypeScript", "Tailwind CSS", "DnD Kit"],
-    live: "#",
-    github: "https://github.com/Pronoysaha90",
-    images: [
-      "/placeholder.svg",
-      "/placeholder.svg",
-    ],
-    features: [
-      "Drag and drop task organization",
-      "Priority levels and color coding",
-      "Due date reminders",
-      "Category filtering",
-      "Progress statistics",
-      "Dark/Light theme toggle",
-    ],
-    challenges: [
-      "Implementing smooth drag-and-drop",
-      "State management for complex data",
-      "Local storage synchronization",
-    ],
-    duration: "1 month",
-    role: "Frontend Developer",
-    category: "Productivity",
-  },
-  {
-    id: "weather-app",
-    title: "Weather Dashboard",
-    shortDescription:
-      "A weather application with real-time data, forecasts, and location-based services.",
-    fullDescription:
-      "A comprehensive weather dashboard that provides real-time weather information, 5-day forecasts, and location-based services. Built using React and integrating with weather APIs, the app features beautiful weather animations, detailed metrics, and search functionality for any city worldwide.",
-    tech: ["React.js", "OpenWeather API", "CSS3", "Axios"],
-    live: "#",
-    github: "https://github.com/Pronoysaha90",
-    images: [
-      "/placeholder.svg",
-      "/placeholder.svg",
-    ],
-    features: [
-      "Real-time weather updates",
-      "5-day weather forecast",
-      "City search functionality",
-      "Weather animations",
-      "Temperature unit conversion",
-      "Geolocation support",
-    ],
-    challenges: [
-      "API rate limiting handling",
-      "Creating weather-appropriate animations",
-      "Accurate geolocation implementation",
-    ],
-    duration: "2 weeks",
-    role: "Frontend Developer",
-    category: "Utility",
-  },
+
+  // {
+  //   id: "task-manager",
+  //   title: "Task Manager App",
+  //   shortDescription:
+  //     "A productivity app with drag-and-drop task management.",
+  //   fullDescription:
+  //     "Task management app built with React featuring priorities and categories.",
+  //   tech: ["React", "TypeScript", "Tailwind CSS"],
+  //   live: "#",
+  //   github: "https://github.com/Pronoysaha90",
+  //   images: [
+  //     beeImg,
+  //     beeImg,
+  //   ],
+  //   features: [
+  //     "Drag & drop tasks",
+  //     "Priority labels",
+  //     "Dark mode",
+  //   ],
+  //   challenges: [
+  //     "State management",
+  //     "Drag & drop UX",
+  //   ],
+  //   duration: "1 month",
+  //   role: "Frontend Developer",
+  //   category: "Productivity",
+  // },
+
+  // {
+  //   id: "weather-app",
+  //   title: "Weather Dashboard",
+  //   shortDescription:
+  //     "Real-time weather app with forecasts and geolocation.",
+  //   fullDescription:
+  //     "Weather dashboard using OpenWeather API with animated UI.",
+  //   tech: ["React", "API", "CSS"],
+  //   live: "#",
+  //   github: "https://github.com/Pronoysaha90",
+  //   images: [
+  //     beeImg,
+  //     beeImg,
+  //   ],
+  //   features: [
+  //     "Live weather data",
+  //     "5-day forecast",
+  //     "City search",
+  //   ],
+  //   challenges: [
+  //     "API limits",
+  //     "Data accuracy",
+  //   ],
+  //   duration: "2 weeks",
+  //   role: "Frontend Developer",
+  //   category: "Utility",
+  // },
 ];
