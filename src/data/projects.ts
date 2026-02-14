@@ -2,7 +2,7 @@ import fashionShopImg from "@/assets/fashionshop.png";
 import rollingRepairImg from "@/assets/rolling-repair.png";
 import travelBookingImg from "@/assets/travel-booking.png";
 import portfolioImg from "@/assets/pronoy-hero.jpg";
-// import beeImg from "@/assets/bee.svg";
+import beeImg from "@/assets/bee.svg";
 
 export interface Project {
   id: string;
@@ -137,33 +137,33 @@ export const projects: Project[] = [
     category: "Portfolio",
   },
 
-  // {
-  //   id: "task-manager",
-  //   title: "Task Manager App",
-  //   shortDescription:
-  //     "A productivity app with drag-and-drop task management.",
-  //   fullDescription:
-  //     "Task management app built with React featuring priorities and categories.",
-  //   tech: ["React", "TypeScript", "Tailwind CSS"],
-  //   live: "#",
-  //   github: "https://github.com/Pronoysaha90",
-  //   images: [
-  //     beeImg,
-  //     beeImg,
-  //   ],
-  //   features: [
-  //     "Drag & drop tasks",
-  //     "Priority labels",
-  //     "Dark mode",
-  //   ],
-  //   challenges: [
-  //     "State management",
-  //     "Drag & drop UX",
-  //   ],
-  //   duration: "1 month",
-  //   role: "Frontend Developer",
-  //   category: "Productivity",
-  // },
+  {
+    id: "task-manager",
+    title: "Task Manager App",
+    shortDescription:
+      "A productivity app with drag-and-drop task management.",
+    fullDescription:
+      "Task management app built with React featuring priorities and categories.",
+    tech: ["React", "TypeScript", "Tailwind CSS"],
+    live: "#",
+    github: "https://github.com/Pronoysaha90",
+    images: [
+      beeImg,
+      beeImg,
+    ],
+    features: [
+      "Drag & drop tasks",
+      "Priority labels",
+      "Dark mode",
+    ],
+    challenges: [
+      "State management",
+      "Drag & drop UX",
+    ],
+    duration: "1 month",
+    role: "Frontend Developer",
+    category: "Productivity",
+  },
 
   // {
   //   id: "weather-app",
