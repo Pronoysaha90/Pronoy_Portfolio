@@ -165,31 +165,31 @@ export const projects: Project[] = [
     category: "Productivity",
   },
 
-  // {
-  //   id: "weather-app",
-  //   title: "Weather Dashboard",
-  //   shortDescription:
-  //     "Real-time weather app with forecasts and geolocation.",
-  //   fullDescription:
-  //     "Weather dashboard using OpenWeather API with animated UI.",
-  //   tech: ["React", "API", "CSS"],
-  //   live: "#",
-  //   github: "https://github.com/Pronoysaha90",
-  //   images: [
-  //     beeImg,
-  //     beeImg,
-  //   ],
-  //   features: [
-  //     "Live weather data",
-  //     "5-day forecast",
-  //     "City search",
-  //   ],
-  //   challenges: [
-  //     "API limits",
-  //     "Data accuracy",
-  //   ],
-  //   duration: "2 weeks",
-  //   role: "Frontend Developer",
-  //   category: "Utility",
-  // },
+  {
+    id: "weather-app",
+    title: "Weather Dashboard",
+    shortDescription:
+      "Real-time weather app with forecasts and geolocation.",
+    fullDescription:
+      "Weather dashboard using OpenWeather API with animated UI.",
+    tech: ["React", "API", "CSS"],
+    live: "#",
+    github: "https://github.com/Pronoysaha90",
+    images: [
+      beeImg,
+      beeImg,
+    ],
+    features: [
+      "Live weather data",
+      "5-day forecast",
+      "City search",
+    ],
+    challenges: [
+      "API limits",
+      "Data accuracy",
+    ],
+    duration: "2 weeks",
+    role: "Frontend Developer",
+    category: "Utility",
+  },
 ];
