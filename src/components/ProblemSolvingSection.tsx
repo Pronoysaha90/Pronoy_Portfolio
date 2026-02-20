@@ -23,7 +23,7 @@ const platforms = [
   {
     name: "HackerRank",
     handle: "pronoysaha623",
-    stats: "Problem Solving",
+    stats: "Hackos: 372",
     status: "Active",
     color: "text-green-400",
     bgColor: "bg-green-400/10",

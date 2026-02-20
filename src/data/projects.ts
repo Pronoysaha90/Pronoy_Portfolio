@@ -17,10 +17,16 @@ export interface Project {
   challenges: string[];
   duration: string;
   role: string;
-  category: string;
+  category: string;          // old (kept for safety)
+  categories: string[];      // NEW (for multi filter)
 }
 
 export const projects: Project[] = [
+
+  // =============================
+  // React + Public
+  // =============================
+
   {
     id: "fashion-shop",
     title: "FashionShop E-commerce",
@@ -31,11 +37,7 @@ export const projects: Project[] = [
     tech: ["React.js", "Tailwind CSS", "JavaScript", "Framer Motion"],
     live: "https://react-fashion-shop-three.vercel.app/",
     github: "https://github.com/Pronoysaha90",
-    images: [
-      fashionShopImg,
-      fashionShopImg,
-      fashionShopImg,
-    ],
+    images: [fashionShopImg, fashionShopImg],
     features: [
       "Dark mode UI with smooth theme switching",
       "Interactive product slider",
@@ -49,7 +51,38 @@ export const projects: Project[] = [
     duration: "2 months",
     role: "Frontend Developer",
     category: "E-commerce",
+    categories: ["react", "public", "all"],
   },
+
+  {
+    id: "portfolio-v1",
+    title: "Personal Portfolio v1",
+    shortDescription:
+      "My first personal portfolio showcasing projects and skills.",
+    fullDescription:
+      "A minimalist portfolio built using HTML, CSS, and JavaScript.",
+    tech: ["HTML", "CSS", "JavaScript", "GSAP"],
+    live: "#",
+    github: "https://github.com/Pronoysaha90",
+    images: [portfolioImg, portfolioImg],
+    features: [
+      "Smooth scrolling",
+      "Project showcase",
+      "Responsive layout",
+    ],
+    challenges: [
+      "Animation timing",
+      "Cross-browser support",
+    ],
+    duration: "3 weeks",
+    role: "Frontend Developer",
+    category: "Portfolio",
+    categories: ["react", "public", "all"],
+  },
+
+  // =============================
+  // WordPress + Public
+  // =============================
 
   {
     id: "rolling-repair",
@@ -61,10 +94,7 @@ export const projects: Project[] = [
     tech: ["WordPress", "Elementor", "CSS", "JavaScript"],
     live: "https://rollingrepair.org",
     github: null,
-    images: [
-      rollingRepairImg,
-      rollingRepairImg,
-    ],
+    images: [rollingRepairImg, rollingRepairImg],
     features: [
       "SEO optimized pages",
       "Service showcase",
@@ -78,6 +108,7 @@ export const projects: Project[] = [
     duration: "1 month",
     role: "Web Developer",
     category: "Business",
+    categories: ["wordpress", "public", "all"],
   },
 
   {
@@ -90,10 +121,7 @@ export const projects: Project[] = [
     tech: ["WordPress", "HTML", "CSS", "JavaScript"],
     live: "https://bluegemtravels.com/",
     github: null,
-    images: [
-      travelBookingImg,
-      travelBookingImg,
-    ],
+    images: [travelBookingImg, travelBookingImg],
     features: [
       "Destination gallery",
       "Tour packages",
@@ -107,35 +135,12 @@ export const projects: Project[] = [
     duration: "6 weeks",
     role: "Web Developer",
     category: "Travel",
+    categories: ["wordpress", "public", "all"],
   },
 
-  {
-    id: "portfolio-v1",
-    title: "Personal Portfolio v1",
-    shortDescription:
-      "My first personal portfolio showcasing projects and skills.",
-    fullDescription:
-      "A minimalist portfolio built using HTML, CSS, and JavaScript.",
-    tech: ["HTML", "CSS", "JavaScript", "GSAP"],
-    live: "#",
-    github: "https://github.com/Pronoysaha90",
-    images: [
-      portfolioImg,
-      portfolioImg,
-    ],
-    features: [
-      "Smooth scrolling",
-      "Project showcase",
-      "Responsive layout",
-    ],
-    challenges: [
-      "Animation timing",
-      "Cross-browser support",
-    ],
-    duration: "3 weeks",
-    role: "Frontend Developer",
-    category: "Portfolio",
-  },
+  // =============================
+  // Software / Tools
+  // =============================
 
   {
     id: "task-manager",
@@ -147,10 +152,7 @@ export const projects: Project[] = [
     tech: ["React", "TypeScript", "Tailwind CSS"],
     live: "#",
     github: "https://github.com/Pronoysaha90",
-    images: [
-      beeImg,
-      beeImg,
-    ],
+    images: [beeImg, beeImg],
     features: [
       "Drag & drop tasks",
       "Priority labels",
@@ -163,10 +165,11 @@ export const projects: Project[] = [
     duration: "1 month",
     role: "Frontend Developer",
     category: "Productivity",
+    categories: ["software-tools", "react", "public", "all"],
   },
 
   {
-    id: "weather-app",
+    id: "weather-dashboard",
     title: "Weather Dashboard",
     shortDescription:
       "Real-time weather app with forecasts and geolocation.",
@@ -175,10 +178,7 @@ export const projects: Project[] = [
     tech: ["React", "API", "CSS"],
     live: "#",
     github: "https://github.com/Pronoysaha90",
-    images: [
-      beeImg,
-      beeImg,
-    ],
+    images: [beeImg, beeImg],
     features: [
       "Live weather data",
       "5-day forecast",
@@ -191,113 +191,7 @@ export const projects: Project[] = [
     duration: "2 weeks",
     role: "Frontend Developer",
     category: "Utility",
+    categories: ["software-tools", "react", "public", "all"],
   },
-    {
-    id: "weather-app",
-    title: "Weather Dashboard",
-    shortDescription:
-      "Real-time weather app with forecasts and geolocation.",
-    fullDescription:
-      "Weather dashboard using OpenWeather API with animated UI.",
-    tech: ["React", "API", "CSS"],
-    live: "#",
-    github: "https://github.com/Pronoysaha90",
-    images: [
-      beeImg,
-      beeImg,
-    ],
-    features: [
-      "Live weather data",
-      "5-day forecast",
-      "City search",
-    ],
-    challenges: [
-      "API limits",
-      "Data accuracy",
-    ],
-    duration: "2 weeks",
-    role: "Frontend Developer",
-    category: "Utility",
-  },
-  {
-    id: "weather-app",
-    title: "Weather Dashboard",
-    shortDescription:
-      "Real-time weather app with forecasts and geolocation.",
-    fullDescription:
-      "Weather dashboard using OpenWeather API with animated UI.",
-    tech: ["React", "API", "CSS"],
-    live: "#",
-    github: "https://github.com/Pronoysaha90",
-    images: [
-      beeImg,
-      beeImg,
-    ],
-    features: [
-      "Live weather data",
-      "5-day forecast",
-      "City search",
-    ],
-    challenges: [
-      "API limits",
-      "Data accuracy",
-    ],
-    duration: "2 weeks",
-    role: "Frontend Developer",
-    category: "Utility",
-  },
-    {
-    id: "weather-app",
-    title: "Weather Dashboard",
-    shortDescription:
-      "Real-time weather app with forecasts and geolocation.",
-    fullDescription:
-      "Weather dashboard using OpenWeather API with animated UI.",
-    tech: ["React", "API", "CSS"],
-    live: "#",
-    github: "https://github.com/Pronoysaha90",
-    images: [
-      beeImg,
-      beeImg,
-    ],
-    features: [
-      "Live weather data",
-      "5-day forecast",
-      "City search",
-    ],
-    challenges: [
-      "API limits",
-      "Data accuracy",
-    ],
-    duration: "2 weeks",
-    role: "Frontend Developer",
-    category: "Utility",
-  },
-  {
-    id: "weather-app",
-    title: "Weather Dashboard",
-    shortDescription:
-      "Real-time weather app with forecasts and geolocation.",
-    fullDescription:
-      "Weather dashboard using OpenWeather API with animated UI.",
-    tech: ["React", "API", "CSS"],
-    live: "#",
-    github: "https://github.com/Pronoysaha90",
-    images: [
-      beeImg,
-      beeImg,
-    ],
-    features: [
-      "Live weather data",
-      "5-day forecast",
-      "City search",
-    ],
-    challenges: [
-      "API limits",
-      "Data accuracy",
-    ],
-    duration: "2 weeks",
-    role: "Frontend Developer",
-    category: "Utility",
-  },
+
 ];
