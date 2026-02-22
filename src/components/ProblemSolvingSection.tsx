@@ -44,25 +44,25 @@ const certifications = [
   {
     title: "Android Application Development",
     issuer: "IBCS-PRIMAX",
-    date: "December 2022",
+    date: "Dec 2022",
     link: "#",
   },
   {
     title: "Programming Contests & Research",
-    issuer: "IEEE Computer Society, Southeast University Student Branch Chapter",
-    date: "2025",
+    issuer: "IEEE Computer Society, SEU Student Branch Chapter",
+    date: "Nov 2025",
     link: "https://media.licdn.com/dms/image/v2/D5622AQE8YNQ_7elZiQ/feedshare-shrink_800/B56Ztlny2lG0Ag-/0/1766936493962?e=1772064000&v=beta&t=aD3mUtrX_CrXhcIdqZUE4xCycygwVoeeD2gz2xHgMAE",
   },
   {
     title: "JavaScript (Basic) Certificate by HackerRank",
     issuer: "Online Course",
-    date: "2025",
+    date: "Nov 2025",
     link: "https://www.hackerrank.com/certificates/iframe/882a40b0878f",
   },
   {
     title: "SQL (Basic) Certificate by HackerRank",
     issuer: "Online Course",
-    date: "2025",
+    date: "Nov 2025",
     link: "https://www.hackerrank.com/certificates/iframe/1f9ce1b170c6",
   },
 ];

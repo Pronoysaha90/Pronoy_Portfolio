@@ -78,7 +78,7 @@ const ProjectDetail = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 {project.live !== "#" && (
                   <motion.a
                     href={project.live}

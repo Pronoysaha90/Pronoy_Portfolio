@@ -59,8 +59,8 @@ export const projects: Project[] = [
     fullDescription:
       "The website is designed with a clean, professional layout and smooth animations to create a strong user experience.It includes all essential business pages such as About, Services, Projects, Blog, and Contact. Each section is organized on separate pages to clearly showcase company information, service details, completed projects, blog content, and contact options. The design is fully responsive and optimized for performance across all devices.",
     tech: ["React", "Tailwind CSS", "JavaScript", "Framer Motion"],
-    live: "#",
-    github: "https://github.com/Pronoysaha90",
+    live: "https://web-graphicon-business.vercel.app/",
+    github: "https://github.com/Pronoysaha90/WebGraphicon_Business",
     images: [webGraphiconImg, webGraphiconImg],
     features: ["Smooth scrolling", "Project showcase", "Responsive layout"],
     challenges: ["Animation timing", "Cross-browser support"],
