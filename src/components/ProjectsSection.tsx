@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { projects } from "@/data/projects";
 
 const ProjectsSection = () => {
-  // Show first 4 projects on home page
-  const featuredProjects = projects.slice(0, 4);
+  // Show first 6 projects on home page
+  const featuredProjects = projects.slice(0, 6);
 
   return (
     <section id="projects" className="py-20 relative">
@@ -27,7 +27,7 @@ const ProjectsSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-12">
           {featuredProjects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -43,7 +43,7 @@ const ProjectsSection = () => {
                   transition={{ duration: 0.3 }}
                 >
                   {/* Project Image */}
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-60 overflow-hidden">
                     {/* Fallback icon (kept) */}
                     <div className="absolute inset-0 flex items-center justify-center z-0">
                       <Folder className="w-16 h-16 text-primary/20" />

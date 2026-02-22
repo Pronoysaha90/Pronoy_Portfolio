@@ -115,7 +115,7 @@ const Projects = () => {
                       transition={{ duration: 0.3 }}
                     >
                       {/* Image */}
-                      <div className="relative h-48 overflow-hidden">
+                      <div className="relative h-60 overflow-hidden">
                         <div className="absolute inset-0 flex items-center justify-center z-0">
                           <Folder className="w-16 h-16 text-primary/20" />
                         </div>
