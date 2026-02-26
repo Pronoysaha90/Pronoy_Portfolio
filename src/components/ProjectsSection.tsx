@@ -36,7 +36,11 @@ const ProjectsSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Link to={`/projects/${project.id}`}>
+              <Link
+                to={`/projects/${project.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <motion.div
                   className="glass-card-hover overflow-hidden h-full flex flex-col group cursor-pointer"
                   whileHover={{ y: -8, scale: 1.02 }}

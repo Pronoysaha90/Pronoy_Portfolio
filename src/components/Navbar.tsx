@@ -82,6 +82,26 @@ const Navbar = () => {
     });
   };
 
+  /* ---------------- LOGO FIX ---------------- */
+  const handleLogoClick = () => {
+    setMobileMenuOpen(false);
+
+    if (isHomePage) {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    } else {
+      navigate("/");
+      setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }, 80);
+    }
+  };
+
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -100,7 +120,7 @@ const Navbar = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400 }}
-            onClick={() => navigate("/")}
+            onClick={handleLogoClick}
             className="text-xl md:text-2xl font-mono font-bold text-primary"
           >
             &lt;PRONOY/&gt;
@@ -127,7 +147,6 @@ const Navbar = () => {
                     {item.label}
                   </span>
 
-                  {/* 🔥 Active underline animation */}
                   {isActive && (
                     <motion.span
                       layoutId="activeSection"
@@ -168,7 +187,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* ---------------- MOBILE MENU ---------------- */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -193,7 +212,6 @@ const Navbar = () => {
                 </button>
               ))}
 
-              {/* Mobile Download CV */}
               <motion.a
                 href={resumePdf}
                 download="Pronoy_Saha_Resume.pdf"

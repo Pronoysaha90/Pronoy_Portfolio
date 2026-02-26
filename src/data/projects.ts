@@ -36,9 +36,9 @@ export const projects: Project[] = [
     id: "food",
     title: "Food Website",
     shortDescription:
-      "A modern and user-friendly travel website built for BlueGem Travels. Designed with organized package, hotel, and restaurant service pages, including an integrated booking system via WPForms for seamless service reservations.",
+      "A modern food ordering platform built with React.js and Tailwind CSS, featuring dynamic filtering and an interactive cart for a seamless user experience.",
     fullDescription:
-      "This project is a modern and professionally designed WordPress website developed for BlueGem Travels, a travel agency offering customized hotel, restaurant, and tour package services.The website features a clean and intuitive layout to provide a smooth and engaging user experience. Each service, including individual hotels, restaurants, and tour packages, is clearly presented on dedicated pages for better clarity and navigation.",
+      "This project is a modern and professionally designed food ordering platform developed using React.js and Tailwind CSS. The website features a clean and intuitive layout to provide a smooth and engaging user experience. Each feature, including dynamic food filtering and an interactive cart system, is clearly presented to ensure seamless navigation.",
     tech: ["React", "Tailwind CSS", "JavaScript", "Radix UI"],
     live: "https://food-hunter.vercel.app/",
     github: "https://github.com/Pronoysaha90/FoodHunter",
