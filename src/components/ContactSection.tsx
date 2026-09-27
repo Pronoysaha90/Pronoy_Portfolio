@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Globe } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Github, Linkedin, Globe, MessageCircle } from "lucide-react";
 import { useState } from "react";
 
 const contactInfo = [
@@ -104,6 +104,27 @@ const ContactSection = () => {
                 </motion.div>
               ))}
             </div>
+
+            {/* WhatsApp CTA */}
+            <motion.a
+              href="https://wa.me/8801745547460"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              className="mt-6 mb-6 flex items-center gap-3 px-5 py-3 rounded-xl font-semibold text-white text-sm transition-all duration-300 w-full justify-center"
+              style={{
+                background: "#25D366",
+                boxShadow: "0 4px 14px rgba(37,211,102,0.2)",
+              }}
+            >
+              <MessageCircle className="w-5 h-5 flex-shrink-0" />
+              Chat on WhatsApp
+            </motion.a>
 
             {/* Social Links */}
             <div>

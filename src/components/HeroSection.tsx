@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Github, Linkedin, Globe, Download } from "lucide-react";
+import { Github, Linkedin, Globe, MessageCircle } from "lucide-react";
 import heroImage from "@/assets/pronoy-hero.png";
-import resumePdf from "@/assets/Resume.pdf";
 
 const roles = [
   "Full-Stack Web Developer",
@@ -90,15 +89,15 @@ const HeroSection = () => {
       />
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-[1.2fr_1fr] gap-4 lg:gap-6 items-center min-h-[80vh]">
+        <div className="grid lg:grid-cols-[1.2fr_1fr] gap-2 lg:gap-4 items-center min-h-[80vh]">
           {/* ── LEFT CONTENT ── */}
-          <div className="flex flex-col items-start text-left">
+          <div className="flex flex-col items-center text-center lg:items-start lg:text-left order-2 lg:order-1">
             {/* Hello label */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.25 }}
-              className="text-sm text-[#EF88AD] tracking-[0.25em] uppercase font-medium mb-4"
+              className="text-sm text-[#EF88AD] tracking-[0.25em] uppercase font-medium mb-4 w-full text-center lg:text-left"
             >
               Hello, I'm
             </motion.p>
@@ -133,7 +132,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="text-sm md:text-base text-white/55 leading-relaxed mb-8 max-w-md"
+              className="text-sm md:text-base text-white/55 leading-relaxed mb-8 max-w-md mx-auto lg:mx-0"
             >
               Building modern, scalable, and visually engaging web experiences
               using React, WordPress, and Shopify with a focus on conversion
@@ -169,25 +168,32 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
-              className="flex flex-wrap gap-4 mb-8"
+              className="flex flex-row items-center gap-3 mb-8"
             >
               <motion.a
                 href="#projects"
-                className="btn-glow flex items-center gap-2"
+                className="btn-glow flex items-center justify-center gap-2 whitespace-nowrap px-5 py-3 text-sm font-semibold rounded-full"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
               >
                 View My Work
               </motion.a>
               <motion.a
-                href={resumePdf}
-                download="Pronoy_Saha_Resume.pdf"
-                className="btn-glass flex items-center gap-2"
-                whileHover={{ scale: 1.03 }}
+                href="https://wa.me/8801745547460"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 whitespace-nowrap px-5 py-3 text-sm font-semibold rounded-full border transition-all duration-300"
+                style={{
+                  background: "#25D366",
+                  borderColor: "#25D366",
+                  color: "#fff",
+                  boxShadow: "0 4px 12px rgba(37,211,102,0.15)",
+                }}
+                whileHover={{ scale: 1.03, boxShadow: "0 6px 18px rgba(37,211,102,0.25)" }}
                 whileTap={{ scale: 0.97 }}
               >
-                <Download className="w-4 h-4" />
-                Download CV
+                <MessageCircle className="w-4 h-4 flex-shrink-0" />
+                WhatsApp
               </motion.a>
             </motion.div>
 
@@ -196,7 +202,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9 }}
-              className="flex gap-3"
+              className="flex gap-3 justify-center lg:justify-start"
             >
               {socialLinks.map((s) => (
                 <motion.a
@@ -224,7 +230,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
-            className="relative flex justify-center lg:justify-end"
+            className="relative flex justify-center lg:justify-end order-1 lg:order-2"
           >
             {/* Glow behind image */}
             <div
