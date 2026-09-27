@@ -8,7 +8,7 @@ const education = [
     location: "Dhaka",
     duration: "Nov 2023 - Present",
     status: "Ongoing",
-    cgpa: "3.36",
+    cgpa: "3.55",
     expected: "2026",
   },
   {
@@ -122,9 +122,8 @@ const EducationSection = () => {
 
                 {/* Status Badge */}
                 <span
-                  className={`status-badge ${
-                    edu.status === "Ongoing" ? "status-ongoing" : "status-completed"
-                  }`}
+                  className={`status-badge ${edu.status === "Ongoing" ? "status-ongoing" : "status-completed"
+                    }`}
                 >
                   {edu.status}
                 </span>
