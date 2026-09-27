@@ -1,4 +1,5 @@
 import { useParams, Link, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowLeft,
@@ -9,6 +10,7 @@ import {
   Folder,
   CheckCircle2,
   AlertCircle,
+  Download,
 } from "lucide-react";
 import { projects } from "@/data/projects";
 import Navbar from "@/components/Navbar";
@@ -17,6 +19,12 @@ import Footer from "@/components/Footer";
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
   const project = projects.find((p) => p.id === id);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  // Reset image index when navigating to a different project
+  useEffect(() => {
+    setActiveImageIndex(0);
+  }, [id]);
 
   if (!project) {
     return <Navigate to="/projects" replace />;
@@ -54,24 +62,31 @@ const ProjectDetail = () => {
               {/* Main Image (NO GRADIENT) */}
               <div className="relative aspect-video glass-card overflow-hidden">
                 <img
-                  src={project.images[0]}
+                  src={project.images[activeImageIndex] || project.images[0]}
                   alt={project.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-opacity duration-300"
                 />
               </div>
 
               {/* Thumbnails */}
-              <div className="grid grid-cols-3 gap-4">
-                {project.images.slice(0, 3).map((image, index) => (
+              <div className="grid grid-cols-4 gap-4">
+                {project.images.slice(0, 4).map((image, index) => (
                   <motion.div
                     key={index}
-                    className="aspect-video glass-card overflow-hidden cursor-pointer group"
-                    whileHover={{ scale: 1.05 }}
+                    onClick={() => setActiveImageIndex(index)}
+                    className={`aspect-video glass-card overflow-hidden cursor-pointer group border-2 transition-all duration-300 ${
+                      activeImageIndex === index 
+                        ? 'border-primary shadow-lg shadow-primary/20 scale-105' 
+                        : 'border-transparent hover:border-primary/50'
+                    }`}
+                    whileHover={{ scale: activeImageIndex === index ? 1.05 : 1.05 }}
                   >
                     <img
                       src={image}
                       alt={`${project.title} screenshot ${index + 1}`}
-                      className="w-full h-full object-cover group-hover:opacity-80 transition-opacity"
+                      className={`w-full h-full object-cover transition-opacity ${
+                        activeImageIndex === index ? 'opacity-100' : 'group-hover:opacity-80'
+                      }`}
                     />
                   </motion.div>
                 ))}
@@ -104,6 +119,21 @@ const ProjectDetail = () => {
                   >
                     <Github className="w-5 h-5" />
                     View Code
+                  </motion.a>
+                )}
+
+                {project.documentationUrl && (
+                  <motion.a
+                    href={project.documentationUrl}
+                    download="SYSTEM_DOCUMENTATION.md"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-glass flex-1 flex items-center justify-center gap-2"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Download className="w-5 h-5" />
+                    Software Details
                   </motion.a>
                 )}
               </div>

@@ -2,52 +2,52 @@ import { motion } from "framer-motion";
 
 const testimonials = [
   {
-    name: "Sarah Johnson",
-    handle: "@sarahj_dev",
-    image: "/placeholder.svg",
-    content: "Pronoy delivered an exceptional e-commerce website. His attention to detail and coding skills are outstanding!",
+    name: "Sarah Jenkins",
+    handle: "CEO at TechFlow, New York (USA)",
+    image: "https://api.dicebear.com/7.x/initials/svg?seed=SJ&backgroundColor=0ea5e9",
+    content: "Pronoy rebuilt our e-commerce frontend in React and it completely transformed our conversion rates. His communication was top-notch despite the timezone difference.",
   },
   {
-    name: "Michael Chen",
-    handle: "@mchen_tech",
-    image: "/placeholder.svg",
-    content: "Working with Pronoy was a great experience. He understood our requirements perfectly and exceeded expectations.",
+    name: "Fahim Rahman",
+    handle: "Founder, Bengal Tours (Dhaka, BD)",
+    image: "https://api.dicebear.com/7.x/initials/svg?seed=FR&backgroundColor=f59e0b",
+    content: "Excellent work on our travel agency website. The booking system integration was smooth, and the site looks premium. Best web developer I've worked with in BD!",
   },
   {
-    name: "Emily Davis",
-    handle: "@emily_designs",
-    image: "/placeholder.svg",
-    content: "The website Pronoy built for us is fast, responsive, and looks amazing. Highly recommend his services!",
+    name: "James Carter",
+    handle: "Product Manager, London (UK)",
+    image: "https://api.dicebear.com/7.x/initials/svg?seed=JC&backgroundColor=10b981",
+    content: "Finding a reliable frontend dev is tough. Pronoy not only writes clean code but also brings great UX suggestions to the table. Will definitely hire him again.",
   },
   {
-    name: "David Kim",
-    handle: "@davidk_web",
-    image: "/placeholder.svg",
-    content: "Pronoy's React and Tailwind expertise is impressive. He transformed our vision into reality flawlessly.",
+    name: "Nusrat Jahan",
+    handle: "Owner, Elegant Boutique (Sylhet, BD)",
+    image: "https://api.dicebear.com/7.x/initials/svg?seed=NJ&backgroundColor=ec4899",
+    content: "Pronoy is a lifesaver. We needed our clothing store's Shopify site up in two weeks and he delivered flawlessly. Very professional and easy to work with.",
   },
   {
-    name: "Lisa Thompson",
-    handle: "@lisa_ux",
-    image: "/placeholder.svg",
-    content: "Excellent communication and delivery. Pronoy is a true professional who cares about quality.",
+    name: "Elena Rossi",
+    handle: "Lead Designer, Milan (Italy)",
+    image: "https://api.dicebear.com/7.x/initials/svg?seed=ER&backgroundColor=8b5cf6",
+    content: "Pronoy's expertise in Tailwind CSS and React is unmatched. He took our Figma designs and converted them into a pixel-perfect, responsive web app in record time.",
   },
   {
-    name: "Alex Rodriguez",
-    handle: "@alex_codes",
-    image: "/placeholder.svg",
-    content: "Fast turnaround, clean code, and beautiful designs. Pronoy is my go-to developer for web projects.",
+    name: "Tanvir Ahmed",
+    handle: "CTO, NextGen IT (Chittagong, BD)",
+    image: "https://api.dicebear.com/7.x/initials/svg?seed=TA&backgroundColor=0ea5e9",
+    content: "Great experience working with Pronoy. He fixed the bugs in our existing React project and optimized the load time significantly. Highly recommended for complex projects.",
   },
   {
-    name: "Jennifer Lee",
-    handle: "@jennifer_dev",
-    image: "/placeholder.svg",
-    content: "Outstanding work on our company website. Pronoy exceeded all expectations with his creative solutions.",
+    name: "Marcus Berg",
+    handle: "Agency Owner, Stockholm (Sweden)",
+    image: "https://api.dicebear.com/7.x/initials/svg?seed=MB&backgroundColor=f43f5e",
+    content: "I hired Pronoy for a custom WordPress site. He understood the requirements perfectly and delivered a blazing fast, SEO-friendly website that our client loved.",
   },
   {
-    name: "Robert Williams",
-    handle: "@rob_tech",
-    image: "/placeholder.svg",
-    content: "Professional, reliable, and talented. Pronoy delivered our project ahead of schedule with exceptional quality.",
+    name: "David Wilson",
+    handle: "Startup Founder, Sydney (Australia)",
+    image: "https://api.dicebear.com/7.x/initials/svg?seed=DW&backgroundColor=14b8a6",
+    content: "Fast turnaround, extremely clean codebase, and he actually cares about the final product. Pronoy is a rare talent when it comes to modern web development.",
   },
 ];
 
@@ -80,7 +80,7 @@ const TestimonialsSection = () => {
   const row2 = [...testimonials.reverse(), ...testimonials.reverse()];
 
   return (
-    <section className="py-20 relative overflow-hidden">
+    <section className="py-12 relative overflow-hidden">
       <div className="absolute inset-0 animated-bg opacity-30" />
 
       <div className="container mx-auto px-6 relative z-10 mb-12">

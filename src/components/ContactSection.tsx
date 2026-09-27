@@ -43,7 +43,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-20 relative">
+    <section id="contact" className="py-12 relative">
       <div className="absolute inset-0 animated-bg opacity-50" />
       <div className="absolute inset-0 grid-pattern opacity-30" />
 
@@ -53,7 +53,7 @@ const ContactSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-10"
         >
           <h2 className="section-title">
             Get In <span className="text-primary text-glow">Touch</span>

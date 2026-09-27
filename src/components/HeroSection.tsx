@@ -1,243 +1,263 @@
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Download, FolderOpen, Github, Linkedin } from "lucide-react";
-import heroImage from "@/assets/pronoy-hero.jpg";
+import { useState, useEffect } from "react";
+import { Github, Linkedin, Globe, Download } from "lucide-react";
+import heroImage from "@/assets/pronoy-hero.png";
 import resumePdf from "@/assets/Resume.pdf";
 
 const roles = [
-  "Frontend Developer",
-  "Web Developer",
-  "Problem Solver",
-  "React Specialist",
+  "Full-Stack Web Developer",
+  "React.js Developer",
+  "WordPress & Shopify Expert",
+  "UI/UX Enthusiast",
+];
+
+const socialLinks = [
+  {
+    icon: Github,
+    href: "https://github.com/Pronoysaha90",
+    label: "GitHub",
+  },
+  {
+    icon: Linkedin,
+    href: "https://linkedin.com/in/pronoysaha90",
+    label: "LinkedIn",
+  },
+  {
+    icon: Globe,
+    href: "https://pronoysaha90.github.io/Portfolio_Pronoy/",
+    label: "Website",
+  },
 ];
 
 const HeroSection = () => {
-  const [currentRole, setCurrentRole] = useState(0);
-  const [displayText, setDisplayText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [displayed, setDisplayed] = useState("");
+  const [typing, setTyping] = useState(true);
 
+  // Typewriter effect
   useEffect(() => {
-    const role = roles[currentRole];
-    const timeout = setTimeout(
-      () => {
-        if (!isDeleting) {
-          if (displayText.length < role.length) {
-            setDisplayText(role.slice(0, displayText.length + 1));
-          } else {
-            setTimeout(() => setIsDeleting(true), 2000);
-          }
-        } else {
-          if (displayText.length > 0) {
-            setDisplayText(displayText.slice(0, -1));
-          } else {
-            setIsDeleting(false);
-            setCurrentRole((prev) => (prev + 1) % roles.length);
-          }
-        }
-      },
-      isDeleting ? 50 : 100,
-    );
+    const current = roles[roleIndex];
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (typing) {
+      if (displayed.length < current.length) {
+        timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 60);
+      } else {
+        timeout = setTimeout(() => setTyping(false), 1800);
+      }
+    } else {
+      if (displayed.length > 0) {
+        timeout = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 30);
+      } else {
+        setRoleIndex((i) => (i + 1) % roles.length);
+        setTyping(true);
+      }
+    }
+
     return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, currentRole]);
+  }, [displayed, typing, roleIndex]);
 
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center pt-20 overflow-hidden"
+      className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-transparent"
     >
-      {/* Animated background */}
-      <div className="absolute inset-0 animated-bg" />
-      <div className="absolute inset-0 grid-pattern opacity-50" />
+      {/* Giant "PRONOY" background text — more visible deep maroon */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+        <motion.span
+          initial={{ opacity: 0, scale: 0.85 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.4, ease: "easeOut" }}
+          className="text-[10rem] md:text-[16rem] lg:text-[22rem] font-black uppercase leading-none tracking-tighter font-['Playfair_Display']"
+          style={{
+            WebkitTextStroke: "1px #670D2F",
+            color: "transparent",
+            WebkitTextFillColor: "transparent",
+            opacity: 0.08,
+          }}
+        >
+          PRONOY
+        </motion.span>
+      </div>
 
-      {/* Floating orbs */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+      {/* Radial red glow top-right */}
       <div
-        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-glow-blue/10 rounded-full blur-3xl animate-pulse"
-        style={{ animationDelay: "1s" }}
+        className="absolute right-0 top-0 w-2/3 h-full pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at 85% 40%, rgba(103,13,47,0.35) 0%, transparent 65%)",
+        }}
       />
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Right Content - Hero Visual (Mobile First) */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="relative flex justify-center lg:order-2 order-1"
-          >
-            {/* Glow rings - BIGGER */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-80 h-80 md:w-[420px] md:h-[420px] lg:w-[480px] lg:h-[480px] border border-primary/20 rounded-full animate-pulse" />
-              <div
-                className="absolute w-88 h-88 md:w-[480px] md:h-[480px] lg:w-[540px] lg:h-[540px] border border-primary/10 rounded-full"
-                style={{ animationDelay: "0.5s" }}
-              />
-              <div
-                className="absolute w-96 h-96 md:w-[540px] md:h-[540px] lg:w-[600px] lg:h-[600px] border border-primary/5 rounded-full"
-                style={{ animationDelay: "1s" }}
-              />
-            </div>
-
-            {/* Orbiting icons */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <motion.div
-                className="absolute"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              >
-                <div className="relative w-80 h-80 md:w-[420px] md:h-[420px] lg:w-[480px] lg:h-[480px]">
-                  {/* React icon */}
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-12 h-12 glass-card flex items-center justify-center">
-                    <svg
-                      className="w-6 h-6 text-primary"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
-                      <path d="M12 13.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z" />
-                      <path
-                        fillRule="evenodd"
-                        d="M12 21c6.627 0 12-4.03 12-9s-5.373-9-12-9S0 7.03 0 12s5.373 9 12 9Zm0-2c5.523 0 10-3.134 10-7s-4.477-7-10-7-10 3.134-10 7 4.477 7 10 7Z"
-                        clipRule="evenodd"
-                        opacity=".5"
-                      />
-                    </svg>
-                  </div>
-                  {/* JS icon */}
-                  <div className="absolute top-1/2 -right-4 -translate-y-1/2 w-12 h-12 glass-card flex items-center justify-center">
-                    <span className="text-amber-400 font-bold text-sm">JS</span>
-                  </div>
-                  {/* Tailwind icon */}
-                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-12 h-12 glass-card flex items-center justify-center">
-                    <svg
-                      className="w-6 h-6 text-primary"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
-                      <path d="M12 6c-2.67 0-4.33 1.33-5 4 1-1.33 2.17-1.83 3.5-1.5.76.19 1.31.74 1.91 1.35.98 1 2.09 2.15 4.59 2.15 2.67 0 4.33-1.33 5-4-1 1.33-2.17 1.83-3.5 1.5-.76-.19-1.31-.74-1.91-1.35C15.61 7.15 14.5 6 12 6Zm-5 6c-2.67 0-4.33 1.33-5 4 1-1.33 2.17-1.83 3.5-1.5.76.19 1.31.74 1.91 1.35.98 1 2.09 2.15 4.59 2.15 2.67 0 4.33-1.33 5-4-1 1.33-2.17 1.83-3.5 1.5-.76-.19-1.31-.74-1.91-1.35C10.61 13.15 9.5 12 7 12Z" />
-                    </svg>
-                  </div>
-                  {/* TypeScript icon */}
-                  <div className="absolute top-1/2 -left-4 -translate-y-1/2 w-12 h-12 glass-card flex items-center justify-center">
-                    <span className="text-sky-400 font-bold text-sm">TS</span>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Profile image - BIGGER */}
-            <motion.div
-              className="relative z-10 w-72 h-72 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px] rounded-full overflow-hidden border-4 border-primary/30"
-              animate={{ y: [0, -15, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              style={{ boxShadow: "0 0 80px hsla(187, 92%, 50%, 0.4)" }}
-            >
-              <img
-                src={heroImage}
-                alt="Pronoy Saha"
-                className="w-full h-full object-cover"
-              />
-              {/* Glow overlay */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-glow-blue/10" />
-            </motion.div>
-          </motion.div>
-          {/* Left Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-center lg:text-left lg:order-1 order-2"
-          >
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="inline-block text-primary text-sm font-mono mb-4"
-            >
-              Hello, I'm
-            </motion.span>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4"
-            >
-              <span className="text-foreground">Pronoy </span>
-              <span className="text-primary text-glow">Saha</span>
-            </motion.h1>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-xl md:text-2xl text-muted-foreground mb-6 h-8"
-            >
-              <span className="text-foreground">{displayText}</span>
-              <span className="text-primary animate-pulse">|</span>
-            </motion.div>
-
+        <div className="grid lg:grid-cols-[1.2fr_1fr] gap-4 lg:gap-6 items-center min-h-[80vh]">
+          {/* ── LEFT CONTENT ── */}
+          <div className="flex flex-col items-start text-left">
+            {/* Hello label */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto lg:mx-0"
+              transition={{ delay: 0.25 }}
+              className="text-sm text-[#EF88AD] tracking-[0.25em] uppercase font-medium mb-4"
             >
-              Building modern, scalable, and visually engaging web experiences
-              using React, Tailwind CSS, and motion-driven UI.
+              Hello, I'm
             </motion.p>
 
+            {/* Name */}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35, duration: 0.7 }}
+              className="text-5xl md:text-6xl lg:text-7xl font-bold font-['Playfair_Display'] text-white leading-tight mb-2"
+            >
+              Pronoy{" "}
+              <span style={{ color: "#EF88AD" }}>Saha</span>
+            </motion.h1>
+
+            {/* Typewriter role */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="text-lg md:text-xl text-white/80 font-medium mb-4 h-8 flex items-center"
+            >
+              {displayed}
+              <span
+                className="ml-0.5 inline-block w-0.5 h-5 align-middle animate-pulse"
+                style={{ background: "#EF88AD" }}
+              />
+            </motion.div>
+
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8"
+              className="text-sm md:text-base text-white/55 leading-relaxed mb-8 max-w-md"
+            >
+              Building modern, scalable, and visually engaging web experiences
+              using React, WordPress, and Shopify — with a focus on conversion
+              and clean code that holds up six months later.
+            </motion.p>
+
+            {/* Stats */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              className="flex gap-8 mb-8"
+            >
+              {[
+                { num: "1+", label: "Years Exp." },
+                { num: "20+", label: "Projects" },
+                { num: "15+", label: "Clients" },
+              ].map((s) => (
+                <div key={s.label}>
+                  <p className="text-3xl font-bold text-white">
+                    {s.num.replace("+", "")}
+                    <span style={{ color: "#A53860" }}>+</span>
+                  </p>
+                  <p className="text-xs text-white/40 uppercase tracking-wider mt-0.5">
+                    {s.label}
+                  </p>
+                </div>
+              ))}
+            </motion.div>
+
+            {/* Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              className="flex flex-wrap gap-4 mb-8"
             >
               <motion.a
                 href="#projects"
-                className="btn-glow flex items-center justify-center gap-2 text-primary-foreground"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
+                className="btn-glow flex items-center gap-2"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
               >
-                <FolderOpen className="w-5 h-5" />
                 View My Work
               </motion.a>
               <motion.a
                 href={resumePdf}
                 download="Pronoy_Saha_Resume.pdf"
-                className="btn-glass flex items-center justify-center gap-2"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
+                className="btn-glass flex items-center gap-2"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
               >
-                <Download className="w-5 h-5" />
+                <Download className="w-4 h-4" />
                 Download CV
               </motion.a>
             </motion.div>
 
-            {/* Social Links */}
+            {/* Social Icons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="flex gap-4 justify-center lg:justify-start"
+              transition={{ delay: 0.9 }}
+              className="flex gap-3"
             >
-              <motion.a
-                href="https://github.com/Pronoysaha90"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 glass-card flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-all"
-                whileHover={{ scale: 1.1, y: -2 }}
-              >
-                <Github className="w-5 h-5" />
-              </motion.a>
-              <motion.a
-                href="https://linkedin.com/in/pronoysaha90"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 glass-card flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-all"
-                whileHover={{ scale: 1.1, y: -2 }}
-              >
-                <Linkedin className="w-5 h-5" />
-              </motion.a>
+              {socialLinks.map((s) => (
+                <motion.a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="w-10 h-10 rounded-full flex items-center justify-center border text-white/60 hover:text-[#EF88AD] transition-all duration-300"
+                  style={{
+                    borderColor: "rgba(165,56,96,0.35)",
+                    background: "rgba(103,13,47,0.2)",
+                  }}
+                  whileHover={{ scale: 1.12, y: -2, borderColor: "#A53860" }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <s.icon className="w-4 h-4" />
+                </motion.a>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* ── RIGHT CONTENT — Profile Image (visible on ALL screens) ── */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+            className="relative flex justify-center lg:justify-end"
+          >
+            {/* Glow behind image */}
+            <div
+              className="absolute inset-0 z-0 rounded-2xl"
+              style={{
+                background:
+                  "radial-gradient(circle at 50% 50%, rgba(165,56,96,0.4) 0%, transparent 65%)",
+                filter: "blur(50px)",
+              }}
+            />
+
+            <motion.div
+              className="relative z-10 w-56 h-64 sm:w-64 sm:h-80 md:w-72 md:h-96 lg:w-[380px] lg:h-[480px] rounded-2xl overflow-hidden"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              style={{
+                boxShadow: "0 0 60px rgba(103,13,47,0.35)",
+                border: "1.5px solid rgba(165,56,96,0.25)",
+              }}
+            >
+              <img
+                src={heroImage}
+                alt="Pronoy Saha"
+                className="w-full h-full object-cover object-top"
+              />
+              {/* Maroon gradient overlay at bottom */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(180deg, transparent 50%, rgba(58,5,25,0.7) 100%)",
+                }}
+              />
             </motion.div>
           </motion.div>
         </div>

@@ -49,7 +49,7 @@ const itemVariants = {
 
 const EducationSection = () => {
   return (
-    <section id="education" className="py-20 relative">
+    <section id="education" className="py-12 relative">
       <div className="absolute inset-0 grid-pattern opacity-30" />
 
       <div className="container mx-auto px-6 relative z-10">
@@ -58,7 +58,7 @@ const EducationSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-10"
         >
           <h2 className="section-title">
             <span className="text-primary text-glow">Education</span>

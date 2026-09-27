@@ -6,6 +6,7 @@ import resumePdf from "@/assets/Resume.pdf";
 
 const navItems = [
   { label: "Home", id: "home" },
+  { label: "About", id: "about" },
   { label: "Skills", id: "skills" },
   { label: "Experience", id: "experience" },
   { label: "Projects", id: "projects" },
@@ -121,9 +122,9 @@ const Navbar = () => {
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400 }}
             onClick={handleLogoClick}
-            className="text-xl md:text-2xl font-mono font-bold text-primary"
+            className="text-xl md:text-2xl font-mono font-bold text-white logo-gradient"
           >
-            &lt;PRONOY/&gt;
+            &lt;PRONOY /&gt;
           </motion.button>
 
           {/* Desktop Menu */}
@@ -138,10 +139,10 @@ const Navbar = () => {
                   className="relative px-4 py-2 text-sm font-medium group"
                 >
                   <span
-                    className={`relative z-10 transition-colors ${
+                    className={`relative z-10 transition-colors font-semibold ${
                       isActive
-                        ? "text-primary"
-                        : "text-muted-foreground group-hover:text-foreground"
+                        ? "text-white"
+                        : "text-white/70 group-hover:text-white"
                     }`}
                   >
                     {item.label}
@@ -150,7 +151,7 @@ const Navbar = () => {
                   {isActive && (
                     <motion.span
                       layoutId="activeSection"
-                      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-primary rounded-full"
+                      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-white rounded-full"
                       transition={{
                         type: "spring",
                         stiffness: 380,
@@ -170,7 +171,7 @@ const Navbar = () => {
               download="Pronoy_Saha_Resume.pdf"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
-              className="btn-glass flex items-center gap-2 text-sm"
+              className="flex items-center gap-2 text-sm font-semibold text-white border border-white/30 rounded-full px-6 py-2.5 hover:bg-white/10 transition-all duration-300"
             >
               <Download className="w-4 h-4" />
               Download CV

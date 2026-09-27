@@ -8,7 +8,7 @@ const ProjectsSection = () => {
   const featuredProjects = projects.slice(0, 6);
 
   return (
-    <section id="projects" className="py-20 relative">
+    <section id="projects" className="py-12 relative">
       <div className="absolute inset-0 grid-pattern opacity-30" />
 
       <div className="container mx-auto px-6 relative z-10">
@@ -17,7 +17,7 @@ const ProjectsSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-10"
         >
           <h2 className="section-title">
             Featured <span className="text-primary text-glow">Projects</span>

@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 const filterCategories = [
   "all",
   "wordpress",
+  "shopify",
   "react",
   "software-tools",
   "public",

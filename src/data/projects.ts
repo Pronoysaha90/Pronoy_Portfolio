@@ -8,7 +8,20 @@ import travelnesthub from "@/assets/travelnesthub.png";
 import hamptonswealth from "@/assets/hamptonswealth.png";
 import shopamornaturals from "@/assets/shopamornaturals.png";
 import thestrongpoint from "@/assets/thestrongpoint.png";
+import shopifyImg from "@/assets/Shopify.png";
+import pitchkitImg from "@/assets/PITCHKIT.png";
 import beeImg from "@/assets/bee.svg";
+
+// ISP Billing Assets
+import ispMainImg from "@/assets/ISP Billing/main.png";
+import ispImg1 from "@/assets/ISP Billing/ISP1.png";
+import ispImg2 from "@/assets/ISP Billing/ISP2.png";
+import ispImg3 from "@/assets/ISP Billing/ISP3.png";
+import ispImg4 from "@/assets/ISP Billing/ISP4.png";
+import ispImg5 from "@/assets/ISP Billing/ISP5.png";
+import ispImg6 from "@/assets/ISP Billing/ISP6.png";
+import ispImg7 from "@/assets/ISP Billing/ISP7.png";
+import ispDoc from "@/assets/ISP Billing/SYSTEM_DOCUMENTATION.md?url";
 
 export interface Project {
   id: string;
@@ -18,6 +31,7 @@ export interface Project {
   tech: string[];
   live: string;
   github: string | null;
+  documentationUrl?: string;
   images: string[];
   features: string[];
   challenges: string[];
@@ -118,6 +132,32 @@ export const projects: Project[] = [
       "Reusable component structure",
     ],
     duration: "1 month",
+    role: "Frontend Developer",
+    category: "E-commerce",
+    categories: ["react", "public", "all"],
+  },
+
+  {
+    id: "pitchkit-jersey",
+    title: "PitchKit Sports Apparel",
+    shortDescription:
+      "A premium, high-performance e-commerce platform for customized sports jerseys and athletic wear, featuring a dynamic product showcase and seamless shopping experience.",
+    fullDescription:
+      "PitchKit is a modern e-commerce web application dedicated to premium sports jerseys and athletic apparel. Developed with React.js and Tailwind CSS, the platform delivers a high-performance, visually engaging shopping experience. It features dynamic product filtering, interactive UI components, and a mobile-first responsive design to ensure users can effortlessly browse and purchase their favorite team kits across all devices.",
+    tech: ["React.js", "Tailwind CSS", "JavaScript", "Framer Motion"],
+    live: "https://pitchkit-jersey-website.vercel.app/",
+    github: null,
+    images: [pitchkitImg, pitchkitImg],
+    features: [
+      "Dynamic Product Showcase",
+      "Interactive UI Components",
+      "Mobile-First Responsive Design",
+    ],
+    challenges: [
+      "Optimizing image performance",
+      "Seamless layout transitions",
+    ],
+    duration: "2 weeks",
     role: "Frontend Developer",
     category: "E-commerce",
     categories: ["react", "public", "all"],
@@ -283,25 +323,56 @@ export const projects: Project[] = [
   },
 
   // =============================
+  // Shopify + Public
+  // =============================
+
+  {
+    id: "cheappuffs",
+    title: "CheapPuffs E-commerce",
+    shortDescription:
+      "A premium Shopify e-commerce platform for CheapPuffs, featuring a sleek design and seamless shopping experience for vaping products.",
+    fullDescription:
+      "CheapPuffs is a modern and professionally designed Shopify e-commerce store. It is fully optimized for selling vaping products, featuring an engaging dark-themed user interface, intuitive navigation, and a secure checkout process to maximize conversions.",
+    tech: ["Shopify", "Liquid", "CSS", "JavaScript"],
+    live: "https://www.cheappuffs.com.au/",
+    github: null,
+    images: [shopifyImg, shopifyImg],
+    features: [
+      "Custom Shopify Theme",
+      "Product filtering & search",
+      "Responsive design",
+    ],
+    challenges: [
+      "Theme customization",
+      "Optimizing performance",
+    ],
+    duration: "2 weeks",
+    role: "Web Developer",
+    category: "E-commerce",
+    categories: ["shopify", "public", "all"],
+  },
+
+  // =============================
   // Software / Tools
   // =============================
 
   {
-    id: "weather-dashboard",
-    title: "Weather Dashboard",
-    shortDescription: "Real-time weather app with forecasts and geolocation.",
+    id: "isp-billing",
+    title: "ISP Billing Web Application",
+    shortDescription: "A complete, automated Internet Service Provider (ISP) Billing & Management Web Application with bKash Auto-Payment and MikroTik router integration.",
     fullDescription:
-      "Weather dashboard using OpenWeather API with animated UI.",
-    tech: ["React", "API", "CSS"],
+      "NexusBill is a comprehensive automated ISP management system designed to replace manual processes. It features Role-Based Access Control, automated billing cycles, bKash auto-payment integration, and direct MikroTik router synchronization. It automatically handles PPPoE user creation, suspension upon expiry, and automated SMS notifications without manual intervention.",
+    tech: ["React", "PostgreSQL", "Node.js", "MikroTik API"],
     live: "#",
-    github: "https://github.com/Pronoysaha90",
-    images: [beeImg, beeImg],
-    features: ["Live weather data", "5-day forecast", "City search"],
-    challenges: ["API limits", "Data accuracy"],
-    duration: "2 weeks",
-    role: "Frontend Developer",
-    category: "Utility",
-    categories: ["software-tools", "react", "public", "all"],
+    github: null,
+    documentationUrl: ispDoc,
+    images: [ispMainImg, ispImg1, ispImg2, ispImg3, ispImg4, ispImg5, ispImg6, ispImg7],
+    features: ["Automated MikroTik Sync", "bKash Auto-Payment", "Automated Billing & Suspensions"],
+    challenges: ["Strict RBAC Implementation", "Timezone Logic for Cron Jobs"],
+    duration: "1 Month",
+    role: "Full Stack Developer",
+    category: "Software/Tools",
+    categories: ["software-tools", "react", "private", "all"],
   },
 
 ];
