@@ -136,7 +136,7 @@ const HeroSection = () => {
               className="text-sm md:text-base text-white/55 leading-relaxed mb-8 max-w-md"
             >
               Building modern, scalable, and visually engaging web experiences
-              using React, WordPress, and Shopify — with a focus on conversion
+              using React, WordPress, and Shopify with a focus on conversion
               and clean code that holds up six months later.
             </motion.p>
 
