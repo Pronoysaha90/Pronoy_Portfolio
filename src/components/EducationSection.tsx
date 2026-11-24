@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { GraduationCap, Calendar, MapPin, Award } from "lucide-react";
+import SectionLabel from "./ui/SectionLabel";
 
 const education = [
   {
@@ -28,109 +29,57 @@ const education = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5 },
-  },
-};
-
 const EducationSection = () => {
   return (
-    <section id="education" className="py-12 relative">
-      <div className="absolute inset-0 grid-pattern opacity-30" />
-
+    <section id="education" className="py-14 md:py-20 relative font-sans">
       <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-10"
-        >
-          <h2 className="section-title">
-            <span className="text-primary text-glow">Education</span>
-          </h2>
-          <p className="section-subtitle">
-            My academic journey and qualifications
-          </p>
-        </motion.div>
+        <div className="mb-10 md:mb-12">
+          <SectionLabel index="07">Education</SectionLabel>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mt-6"
+          >
+            <h2 className="text-3xl md:text-5xl font-medium text-fg font-serif leading-tight">
+              Academic <span className="italic">Background</span>
+            </h2>
+            <p className="mt-3 text-muted text-sm md:text-base">
+              My educational foundation in computing and technology
+            </p>
+          </motion.div>
+        </div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto"
-        >
-          {education.map((edu, index) => (
+        <div className="grid gap-6 md:grid-cols-3">
+          {education.map((item, index) => (
             <motion.div
-              key={edu.degree}
-              variants={itemVariants}
-              whileHover={{ scale: 1.03, y: -5 }}
-              className="glass-card-hover p-6 flex flex-col h-full"
+              key={item.degree}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="p-6 rounded-2xl border border-line bg-surface/40 hover:border-fg/30 transition-colors flex flex-col justify-between"
             >
-              {/* Icon */}
-              <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center mb-4">
-                <GraduationCap className="w-6 h-6 text-primary" />
+              <div>
+                <span className="font-mono text-xs text-muted block mb-3">
+                  {item.duration}
+                </span>
+                <h3 className="text-xl font-serif text-fg mb-2">
+                  {item.degree}
+                </h3>
+                <p className="text-muted text-sm mb-4">
+                  {item.institution} · {item.location}
+                </p>
               </div>
 
-              {/* Degree */}
-              <h3 className="text-lg font-bold text-foreground mb-2">
-                {edu.degree}
-              </h3>
-
-              {/* Institution */}
-              <p className="text-primary font-medium text-sm mb-3">
-                {edu.institution}
-              </p>
-
-              {/* Meta */}
-              <div className="flex flex-wrap gap-3 text-xs text-muted-foreground mb-4">
-                {edu.duration && (
-                  <span className="flex items-center gap-1">
-                    <Calendar className="w-3 h-3" />
-                    {edu.duration}
-                  </span>
-                )}
-                <span className="flex items-center gap-1">
-                  <MapPin className="w-3 h-3" />
-                  {edu.location}
-                </span>
-              </div>
-
-              <div className="mt-auto flex items-center justify-between">
-                {/* CGPA/GPA */}
-                <div className="flex items-center gap-2">
-                  <Award className="w-4 h-4 text-primary" />
-                  <span className="text-sm text-foreground font-medium">
-                    {edu.cgpa ? `CGPA: ${edu.cgpa}` : `GPA: ${edu.gpa}`}
-                  </span>
-                </div>
-
-                {/* Status Badge */}
-                <span
-                  className={`status-badge ${edu.status === "Ongoing" ? "status-ongoing" : "status-completed"
-                    }`}
-                >
-                  {edu.status}
-                </span>
+              <div className="pt-4 border-t border-line/60 flex items-center justify-between text-xs font-mono text-muted">
+                <span>Result: {item.cgpa || item.gpa}</span>
+                <span className="text-fg">{item.status}</span>
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

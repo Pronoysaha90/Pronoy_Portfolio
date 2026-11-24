@@ -5,8 +5,8 @@ import * as THREE from "three";
 
 function AnimatedStars() {
   const ref = useRef<THREE.Group>(null);
-  
-  useFrame((state, delta) => {
+
+  useFrame((_, delta) => {
     if (ref.current) {
       ref.current.rotation.x -= delta * 0.02;
       ref.current.rotation.y -= delta * 0.03;
@@ -15,7 +15,7 @@ function AnimatedStars() {
 
   return (
     <group ref={ref}>
-      <Stars radius={100} depth={50} count={4000} factor={4} saturation={0.3} fade speed={1} />
+      <Stars radius={100} depth={50} count={5000} factor={4.5} saturation={0.4} fade speed={1.2} />
     </group>
   );
 }
@@ -25,8 +25,16 @@ function DistortedSphere() {
 
   useFrame((state) => {
     if (sphereRef.current) {
-      sphereRef.current.position.x = THREE.MathUtils.lerp(sphereRef.current.position.x, (state.pointer.x * state.viewport.width) / 10, 0.05);
-      sphereRef.current.position.y = THREE.MathUtils.lerp(sphereRef.current.position.y, (state.pointer.y * state.viewport.height) / 10, 0.05);
+      sphereRef.current.position.x = THREE.MathUtils.lerp(
+        sphereRef.current.position.x,
+        (state.pointer.x * state.viewport.width) / 10,
+        0.05
+      );
+      sphereRef.current.position.y = THREE.MathUtils.lerp(
+        sphereRef.current.position.y,
+        (state.pointer.y * state.viewport.height) / 10,
+        0.05
+      );
     }
   });
 
@@ -41,7 +49,7 @@ function DistortedSphere() {
             speed={1.5}
             roughness={0.2}
             transparent
-            opacity={0.07}
+            opacity={0.08}
             wireframe
           />
         </Sphere>
@@ -52,12 +60,17 @@ function DistortedSphere() {
 
 export default function GlobalBackground() {
   return (
-    <div className="fixed inset-0 z-[-1]" style={{ background: 'linear-gradient(180deg, #0d0208 0%, #120310 50%, #0d0208 100%)' }}>
+    <div
+      className="fixed inset-0 z-[-1] overflow-hidden"
+      style={{
+        background: "linear-gradient(180deg, #070104 0%, #0d0208 50%, #070104 100%)",
+      }}
+    >
       <Canvas camera={{ position: [0, 0, 1] }}>
         <AnimatedStars />
         <DistortedSphere />
       </Canvas>
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0d0208]/40 to-[#0d0208] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#070104]/30 to-[#070104]/80 pointer-events-none" />
     </div>
   );
 }

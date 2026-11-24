@@ -1,225 +1,237 @@
-import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Globe, MessageCircle } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from 'react';
+import { motion, useScroll } from 'framer-motion';
+import {
+  ArrowUp,
+  ArrowUpRight,
+  Check,
+  Copy,
+  Download,
+  Github,
+  Linkedin,
+  Mail,
+  MapPin,
+  MessageCircle,
+} from 'lucide-react';
+import { scrollToId } from '@/lib/scroll';
+import SectionLabel from './ui/SectionLabel';
+import SplitText from './ui/SplitText';
+import Magnetic from './Magnetic';
+import Reveal from './ui/Reveal';
 
-const contactInfo = [
-  {
-    icon: Mail,
-    label: "Email",
-    value: "pronoysaha723@gmail.com",
-    href: "mailto:pronoysaha723@gmail.com",
-  },
-  {
-    icon: Phone,
-    label: "Phone",
-    value: "+880 1745-547460",
-    href: "tel:+8801745547460",
-  },
-  {
-    icon: MapPin,
-    label: "Location",
-    value: "Mohakhali, Dhaka, Bangladesh",
-    href: null,
-  },
-];
-
-const socialLinks = [
-  { icon: Github, href: "https://github.com/Pronoysaha90", label: "GitHub" },
-  { icon: Linkedin, href: "https://linkedin.com/in/pronoysaha90", label: "LinkedIn" },
-  { icon: Globe, href: "https://pronoysaha90.github.io/Portfolio_Pronoy/", label: "Website" },
-];
-
-const ContactSection = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log("Form submitted:", formData);
-  };
+function CopyEmail({ email }: { email: string }) {
+  const [copied, setCopied] = useState(false);
+  const t = useRef(0);
+  useEffect(() => () => window.clearTimeout(t.current), []);
 
   return (
-    <section id="contact" className="py-12 relative">
-      <div className="absolute inset-0 animated-bg opacity-50" />
-      <div className="absolute inset-0 grid-pattern opacity-30" />
+    <button
+      type="button"
+      onClick={async () => {
+        try {
+          await navigator.clipboard.writeText(email);
+          setCopied(true);
+          t.current = window.setTimeout(() => setCopied(false), 1800);
+        } catch {
+          window.location.href = `mailto:${email}`;
+        }
+      }}
+      className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm text-muted transition-colors hover:border-fg hover:text-fg"
+      aria-live="polite"
+    >
+      {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
+      {copied ? 'Copied to clipboard' : 'Copy email'}
+    </button>
+  );
+}
 
+function BackToTop() {
+  const { scrollYProgress } = useScroll();
+
+  return (
+    <Magnetic strength={0.5}>
+      <button
+        type="button"
+        onClick={() => scrollToId('home')}
+        aria-label="Back to top"
+        className="group relative grid h-16 w-16 place-items-center rounded-full border border-line transition-colors hover:bg-fg hover:text-bg cursor-pointer"
+      >
+        <svg className="absolute inset-0 -rotate-90" viewBox="0 0 64 64" aria-hidden="true">
+          <motion.circle
+            cx="32"
+            cy="32"
+            r="31"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+            style={{ pathLength: scrollYProgress }}
+          />
+        </svg>
+        <ArrowUp size={18} className="transition-transform duration-500 group-hover:-translate-y-1" />
+      </button>
+    </Magnetic>
+  );
+}
+
+const contactLinks = [
+  {
+    label: 'LinkedIn',
+    href: 'https://linkedin.com/in/pronoysaha90',
+    icon: Linkedin,
+    note: 'Connect',
+  },
+  {
+    label: 'GitHub',
+    href: 'https://github.com/Pronoysaha90',
+    icon: Github,
+    note: '@Pronoysaha90',
+  },
+  {
+    label: 'Email',
+    href: 'mailto:pronoysaha723@gmail.com',
+    icon: Mail,
+    note: 'Write to me',
+  },
+  {
+    label: 'WhatsApp',
+    href: 'https://wa.me/8801745547460',
+    icon: MessageCircle,
+    note: 'Chat on WhatsApp',
+  },
+  {
+    label: 'Location',
+    href: 'https://maps.google.com/?q=Mohakhali,Dhaka,Bangladesh',
+    icon: MapPin,
+    note: 'Dhaka, BD',
+  },
+  {
+    label: 'Résumé',
+    href: '/assets/Resume.pdf',
+    icon: Download,
+    note: 'PDF',
+    download: true,
+  },
+];
+
+export default function ContactSection() {
+  const email = 'pronoysaha723@gmail.com';
+
+  return (
+    <section
+      id="contact"
+      className="relative overflow-hidden pt-14 md:pt-20 font-sans"
+      aria-labelledby="contact-title"
+    >
       <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-10"
-        >
-          <h2 className="section-title">
-            Get In <span className="text-primary text-glow">Touch</span>
-          </h2>
-          <p className="section-subtitle">
-            Have a project in mind or want to collaborate? Feel free to reach out!
-          </p>
-        </motion.div>
+        <SectionLabel index="08">Contact</SectionLabel>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h3 className="text-xl font-bold text-foreground mb-6">
-              Contact Information
-            </h3>
+      <h2
+        id="contact-title"
+        className="mt-8 text-[clamp(2.6rem,6.4vw,6.8rem)] leading-[0.9] font-medium tracking-[-0.055em] md:mt-10 text-fg"
+      >
+        <SplitText text="Have an idea?" className="block" />
+        <SplitText
+          text="Let's make it happen."
+          delay={0.15}
+          className="block font-serif font-normal tracking-[-0.035em] italic"
+        />
+      </h2>
 
-            <div className="space-y-4 mb-8">
-              {contactInfo.map((info, index) => (
-                <motion.div
-                  key={info.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="glass-card p-4 flex items-center gap-4"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
-                    <info.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">{info.label}</p>
-                    {info.href ? (
-                      <a
-                        href={info.href}
-                        className="text-foreground hover:text-primary transition-colors"
-                      >
-                        {info.value}
-                      </a>
-                    ) : (
-                      <p className="text-foreground">{info.value}</p>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* WhatsApp CTA */}
-            <motion.a
-              href="https://wa.me/8801745547460"
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
-              className="mt-6 mb-6 flex items-center gap-3 px-5 py-3 rounded-xl font-semibold text-white text-sm transition-all duration-300 w-full justify-center"
-              style={{
-                background: "#25D366",
-                boxShadow: "0 4px 14px rgba(37,211,102,0.2)",
-              }}
-            >
-              <MessageCircle className="w-5 h-5 flex-shrink-0" />
-              Chat on WhatsApp
-            </motion.a>
-
-            {/* Social Links */}
-            <div>
-              <h4 className="text-sm font-semibold text-muted-foreground mb-4">
-                Follow Me
-              </h4>
-              <div className="flex gap-3">
-                {socialLinks.map((social) => (
-                  <motion.a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 glass-card flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-all"
-                    whileHover={{ scale: 1.1, y: -2 }}
-                  >
-                    <social.icon className="w-5 h-5" />
-                  </motion.a>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h3 className="text-xl font-bold text-foreground mb-6">
-              Send a Message
-            </h3>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="text-sm text-muted-foreground mb-2 block">
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary text-foreground placeholder:text-muted-foreground transition-all"
-                  placeholder="John Doe"
-                />
-              </div>
-
-              <div>
-                <label className="text-sm text-muted-foreground mb-2 block">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary text-foreground placeholder:text-muted-foreground transition-all"
-                  placeholder="john@example.com"
-                />
-              </div>
-
-              <div>
-                <label className="text-sm text-muted-foreground mb-2 block">
-                  Message
-                </label>
-                <textarea
-                  value={formData.message}
-                  onChange={(e) =>
-                    setFormData({ ...formData, message: e.target.value })
-                  }
-                  rows={5}
-                  className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary text-foreground placeholder:text-muted-foreground transition-all resize-none"
-                  placeholder="Tell me about your project..."
-                />
-              </div>
-
-              <motion.button
-                type="submit"
-                className="btn-glow w-full flex items-center justify-center gap-2 text-primary-foreground"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+      <div className="mt-12 grid gap-12 md:mt-16 md:grid-cols-12 md:gap-6">
+        <div className="md:col-span-7">
+          <Reveal>
+            <p className="max-w-[42ch] text-muted text-[clamp(1rem,1.2vw,1.15rem)] leading-relaxed">
+              Internships, full-time roles, collaborations or a good engineering conversation — my inbox is open.
+            </p>
+            <Magnetic strength={0.15} className="mt-6 max-w-full">
+              <a
+                href={`mailto:${email}`}
+                className="group relative inline-block max-w-full text-[clamp(1.35rem,2.8vw,2.5rem)] font-medium tracking-[-0.035em] break-all text-fg"
               >
-                <Send className="w-5 h-5" />
-                Send Message
-              </motion.button>
-            </form>
-          </motion.div>
+                {email}
+                <span className="absolute -bottom-1 left-0 h-[2px] w-full origin-right scale-x-0 bg-fg transition-transform duration-700 ease-out group-hover:origin-left group-hover:scale-x-100" />
+              </a>
+            </Magnetic>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <CopyEmail email={email} />
+              <Magnetic>
+                <a
+                  href={`mailto:${email}?subject=${encodeURIComponent("Hello Pronoy — let's work together")}`}
+                  className="group inline-flex items-center gap-2 rounded-full bg-fg px-5 py-2 text-sm font-medium text-bg hover:opacity-90 transition-opacity"
+                >
+                  Start a conversation
+                  <ArrowUpRight
+                    size={14}
+                    className="transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
+                </a>
+              </Magnetic>
+              <Magnetic>
+                <a
+                  href="https://wa.me/8801745547460"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-5 py-2 text-sm font-medium text-emerald-400 hover:bg-emerald-500/20 transition-all"
+                >
+                  <MessageCircle size={14} />
+                  WhatsApp
+                </a>
+              </Magnetic>
+            </div>
+          </Reveal>
         </div>
+
+        <ul className="md:col-span-4 md:col-start-9">
+          {contactLinks.map((l, i) => (
+            <Reveal as="li" key={l.label} delay={i * 0.06}>
+              <a
+                href={l.href}
+                {...(l.download
+                  ? { download: true }
+                  : l.href.startsWith('http')
+                  ? { target: '_blank', rel: 'noreferrer' }
+                  : {})}
+                className="group flex items-center justify-between gap-4 border-t border-line py-3.5 transition-colors last:border-b"
+              >
+                <span className="flex items-center gap-4">
+                  <l.icon
+                    size={17}
+                    strokeWidth={1.5}
+                    className="text-muted transition-colors group-hover:text-fg"
+                  />
+                  <span className="text-lg tracking-[-0.02em] transition-transform duration-500 ease-out group-hover:translate-x-1.5 text-fg">
+                    {l.label}
+                  </span>
+                </span>
+                <span className="flex items-center gap-3 font-mono text-[11px] text-muted group-hover:text-fg transition-colors">
+                  {l.note}
+                  <ArrowUpRight
+                    size={14}
+                    className="transition-transform duration-500 group-hover:rotate-45"
+                  />
+                </span>
+              </a>
+            </Reveal>
+          ))}
+        </ul>
+      </div>
+
+      <footer className="mt-12 border-t border-line md:mt-16">
+        <div className="flex flex-col-reverse gap-6 py-8 sm:flex-row sm:items-center sm:justify-between">
+          <div className="space-y-1 text-sm text-muted">
+            <p>© {new Date().getFullYear()} Pronoy Saha. Designed &amp; built by me.</p>
+            <p className="font-mono text-[11px] tracking-[0.12em] text-faint uppercase">
+              React · TypeScript · Tailwind CSS · Framer Motion
+            </p>
+          </div>
+          <div className="flex items-center gap-5">
+            <span className="hidden font-mono text-[11px] tracking-[0.2em] text-muted uppercase sm:block">
+              Back to top
+            </span>
+            <BackToTop />
+          </div>
+        </div>
+      </footer>
       </div>
     </section>
   );
-};
-
-export default ContactSection;
+}

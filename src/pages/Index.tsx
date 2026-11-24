@@ -1,4 +1,3 @@
-import GlobalBackground from "@/components/GlobalBackground";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -9,12 +8,10 @@ import ProjectsSection from "@/components/ProjectsSection";
 import EducationSection from "@/components/EducationSection";
 import ProblemSolvingSection from "@/components/ProblemSolvingSection";
 import ContactSection from "@/components/ContactSection";
-import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen text-foreground overflow-x-hidden relative">
-      <GlobalBackground />
+    <div className="min-h-screen bg-[#080808] text-foreground overflow-x-clip relative">
       <Navbar />
       <main className="relative z-10">
         <HeroSection />
@@ -27,7 +24,6 @@ const Index = () => {
         <EducationSection />
         <ContactSection />
       </main>
-      <Footer />
     </div>
   );
 };

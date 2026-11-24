@@ -14,10 +14,18 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        sans: ['Geist', 'Plus Jakarta Sans', 'sans-serif'],
+        mono: ['Geist Mono', 'JetBrains Mono', 'monospace'],
+        serif: ['Instrument Serif', 'Playfair Display', 'serif'],
       },
       colors: {
+        bg: "var(--bg, #080808)",
+        fg: "var(--fg, #f5f5f5)",
+        surface: "var(--surface, #101010)",
+        'surface-2': "var(--surface-2, #171717)",
+        line: "var(--line, rgba(255, 255, 255, 0.12))",
+        faint: "var(--faint, #5c5c5c)",
+        muted: "var(--muted, #a0a0a0)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

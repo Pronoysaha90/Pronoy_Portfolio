@@ -1,329 +1,242 @@
-import { motion } from "framer-motion";
+import { useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { projects } from '@/data/projects';
+import SectionLabel from './ui/SectionLabel';
+import SplitText from './ui/SplitText';
+import Magnetic from './Magnetic';
+import Reveal from './ui/Reveal';
+import TechOrbit from './TechOrbit';
 
-const programmingLanguages = [
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+export interface SkillCategory {
+  id: string;
+  index: string;
+  title: string;
+  blurb: string;
+  skills: string[];
+}
+
+export const SKILL_CATEGORIES: SkillCategory[] = [
   {
-    name: "C",
-    icon: (
-      <svg viewBox="0 0 128 128" className="w-10 h-10">
-        <path fill="#659AD3" d="M115.4 30.7L67.1 2.9c-.8-.5-1.9-.7-3.1-.7-1.2 0-2.3.3-3.1.7l-48 27.9c-1.7 1-2.9 3.5-2.9 5.4v55.7c0 1.1.2 2.4 1 3.5l106.8-62c-.6-1.2-1.5-2.1-2.4-2.7z"/>
-        <path fill="#03599C" d="M10.7 95.3c.5.8 1.2 1.5 1.9 1.9l48.2 27.9c.8.5 1.9.7 3.1.7 1.2 0 2.3-.3 3.1-.7l48-27.9c1.7-1 2.9-3.5 2.9-5.4V36.1c0-.9-.1-1.9-.6-2.8l-106.6 62z"/>
-        <path fill="#fff" d="M85.3 76.1C81.1 83.5 73.1 88.5 64 88.5c-13.5 0-24.5-11-24.5-24.5s11-24.5 24.5-24.5c9.1 0 17.1 5 21.3 12.5l13-7.5c-6.8-11.9-19.6-20-34.3-20-21.8 0-39.5 17.7-39.5 39.5s17.7 39.5 39.5 39.5c14.6 0 27.4-8 34.2-19.8l-12.9-7.6z"/>
-      </svg>
-    ),
+    id: 'languages',
+    index: '01',
+    title: 'Languages',
+    blurb: 'Strong algorithmic foundation with modern typed and scripting languages for reliable software.',
+    skills: ['JavaScript', 'TypeScript', 'C', 'C++', 'HTML5', 'CSS3', 'SQL'],
   },
   {
-    name: "C++",
-    icon: (
-      <svg viewBox="0 0 128 128" className="w-10 h-10">
-        <path fill="#00599C" d="M115.4 30.7L67.1 2.9c-.8-.5-1.9-.7-3.1-.7-1.2 0-2.3.3-3.1.7l-48 27.9c-1.7 1-2.9 3.5-2.9 5.4v55.7c0 1.1.2 2.4 1 3.5l106.8-62c-.6-1.2-1.5-2.1-2.4-2.7z"/>
-        <path fill="#004482" d="M10.7 95.3c.5.8 1.2 1.5 1.9 1.9l48.2 27.9c.8.5 1.9.7 3.1.7 1.2 0 2.3-.3 3.1-.7l48-27.9c1.7-1 2.9-3.5 2.9-5.4V36.1c0-.9-.1-1.9-.6-2.8l-106.6 62z"/>
-        <path fill="#fff" d="M85.3 76.1C81.1 83.5 73.1 88.5 64 88.5c-13.5 0-24.5-11-24.5-24.5s11-24.5 24.5-24.5c9.1 0 17.1 5 21.3 12.5l13-7.5c-6.8-11.9-19.6-20-34.3-20-21.8 0-39.5 17.7-39.5 39.5s17.7 39.5 39.5 39.5c14.6 0 27.4-8 34.2-19.8l-12.9-7.6zM82 64h-5v-5h-4v5h-5v4h5v5h4v-5h5zM102 64h-5v-5h-4v5h-5v4h5v5h4v-5h5z"/>
-      </svg>
-    ),
+    id: 'frontend',
+    index: '02',
+    title: 'Frontend',
+    blurb: 'Responsive, accessible, and high-performance user interfaces built with React and modern styling.',
+    skills: ['React', 'Next.js', 'Tailwind CSS', 'Redux', 'Framer Motion', 'Bootstrap'],
   },
   {
-    name: "JavaScript",
-    icon: (
-      <svg viewBox="0 0 128 128" className="w-10 h-10">
-        <path fill="#F0DB4F" d="M1.408 1.408h125.184v125.184H1.408z"/>
-        <path fill="#323330" d="M116.347 96.736c-.917-5.711-4.641-10.508-15.672-14.981-3.832-1.761-8.104-3.022-9.377-5.926-.452-1.69-.512-2.642-.226-3.665.821-3.32 4.784-4.355 7.925-3.403 2.023.678 3.938 2.237 5.093 4.724 5.402-3.498 5.391-3.475 9.163-5.879-1.381-2.141-2.118-3.129-3.022-4.045-3.249-3.629-7.676-5.498-14.756-5.355l-3.688.477c-3.534.893-6.902 2.748-8.877 5.235-5.926 6.724-4.236 18.492 2.975 23.335 7.104 5.332 17.54 6.545 18.873 11.531 1.297 6.104-4.486 8.08-10.234 7.378-4.236-.881-6.592-3.034-9.139-6.949-4.688 2.713-4.688 2.713-9.508 5.485 1.143 2.499 2.344 3.63 4.26 5.795 9.068 9.198 31.76 8.746 35.83-5.176.165-.478 1.261-3.666.38-8.581zM69.462 58.943H57.753l-.048 30.272c0 6.438.333 12.34-.714 14.149-1.713 3.558-6.152 3.117-8.175 2.427-2.059-1.012-3.106-2.451-4.319-4.485-.333-.584-.583-1.036-.667-1.071l-9.52 5.83c1.583 3.249 3.915 6.069 6.902 7.901 4.462 2.678 10.459 3.499 16.731 2.059 4.082-1.189 7.604-3.652 9.448-7.401 2.666-4.915 2.094-10.864 2.07-17.444.06-10.735.001-21.468.001-32.237z"/>
-      </svg>
-    ),
+    id: 'backend',
+    index: '03',
+    title: 'Backend',
+    blurb: 'Service-oriented backends with secure REST APIs, authentication, and high throughput.',
+    skills: ['Node.js', 'Express.js', 'REST APIs', 'Microservices', 'JWT Auth', 'WebSockets'],
   },
   {
-    name: "TypeScript",
-    icon: (
-      <svg viewBox="0 0 128 128" className="w-10 h-10">
-        <path fill="#3178C6" d="M6.3 6.3h115.4v115.4H6.3z"/>
-        <path fill="#FFF" d="M74.3 64.9h-10.4V49.1H41.5v-9.6h43.3v9.6H74.3v15.8zm27.4-4.2c-1.3-1.4-2.8-2.6-4.7-3.5-1.8-.9-3.9-1.5-6.3-2-2.3-.5-4.5-.9-6.5-1.4-2-.4-3.7-.9-5.1-1.4-1.4-.5-2.5-1.1-3.2-1.9-.7-.8-1-1.8-1-3.1 0-1.2.3-2.3 1-3.2.7-.9 1.6-1.6 2.9-2 1.2-.5 2.7-.7 4.3-.7 2.1 0 4 .3 5.6 1 1.6.7 3 1.6 4.1 2.8 1.1 1.2 1.8 2.5 2.2 4l9.5-3.9c-.8-2.5-2-4.8-3.6-6.8-1.6-2-3.7-3.6-6.2-4.9-2.5-1.3-5.5-1.9-8.9-1.9-4 0-7.5.8-10.5 2.4-3 1.6-5.3 3.8-6.9 6.5-1.6 2.7-2.4 5.8-2.4 9.1 0 3.3.7 6.1 2 8.5 1.4 2.4 3.3 4.3 5.6 5.8 2.3 1.5 5.1 2.6 8.2 3.4 3.2.8 6 1.4 8.5 2s4.5 1.2 6.1 1.8c1.6.7 2.8 1.4 3.6 2.4.8 1 1.2 2.3 1.2 3.8 0 1.6-.4 3.1-1.2 4.4-.8 1.3-2 2.3-3.6 3-1.6.8-3.5 1.2-5.7 1.2-2.5 0-4.7-.4-6.6-1.3-1.9-.9-3.5-2.1-4.7-3.6-1.2-1.5-2-3.3-2.5-5.3l-10 3.5c.8 3.2 2.3 6 4.4 8.4 2.1 2.3 4.6 4.2 7.7 5.5 3.1 1.3 6.6 2 10.4 2 4.6 0 8.6-.8 11.8-2.4 3.2-1.6 5.8-3.8 7.6-6.7 1.8-2.9 2.8-6.3 2.8-10.1 0-3.3-.8-6.1-2.4-8.5z"/>
-      </svg>
-    ),
+    id: 'databases',
+    index: '04',
+    title: 'Databases',
+    blurb: 'Relational and document stores, designed with indexing and normalization in mind.',
+    skills: ['PostgreSQL', 'MongoDB', 'MySQL', 'Indexing', 'Normalization'],
+  },
+  {
+    id: 'cms',
+    index: '05',
+    title: 'CMS & E-Commerce',
+    blurb: 'Custom Shopify stores, WordPress themes, Liquid development, and conversion-optimized checkout flows.',
+    skills: ['Shopify', 'WordPress', 'WooCommerce', 'Liquid', 'Elementor', 'Speed Optimization'],
+  },
+  {
+    id: 'tools',
+    index: '06',
+    title: 'Tools & Cloud',
+    blurb: 'Containerised, versioned and ready to deploy with modern developer tooling and cloud platforms.',
+    skills: ['Docker', 'Docker Compose', 'Git', 'GitHub', 'VS Code', 'Postman', 'AWS', 'Vercel'],
   },
 ];
 
-const technologies = [
-  {
-    name: "HTML5",
-    icon: (
-      <svg viewBox="0 0 128 128" className="w-10 h-10">
-        <path fill="#E44D26" d="M19.037 113.876L9.032 1.661h109.936l-10.016 112.198-45.019 12.48z"/>
-        <path fill="#F16529" d="M64 116.8l36.378-10.086 8.559-95.878H64z"/>
-        <path fill="#EBEBEB" d="M64 52.455H45.788L44.53 38.361H64V24.599H29.489l.33 3.692 3.382 37.927H64zm0 35.743l-.061.017-15.327-4.14-.979-10.975H33.816l1.928 21.609 28.193 7.826.063-.017z"/>
-        <path fill="#fff" d="M63.952 52.455v13.763h16.947l-1.597 17.849-15.35 4.143v14.319l28.215-7.82.207-2.325 3.234-36.233.335-3.696h-3.708zm0-27.856v13.762h33.244l.276-3.092.628-6.978.329-3.692z"/>
-      </svg>
-    ),
-  },
-  {
-    name: "CSS3",
-    icon: (
-      <svg viewBox="0 0 128 128" className="w-10 h-10">
-        <path fill="#1572B6" d="M18.814 114.123L8.76 1.352h110.48l-10.064 112.754-45.243 12.543z"/>
-        <path fill="#33A9DC" d="M64.001 117.062l36.559-10.136 8.601-96.354h-45.16z"/>
-        <path fill="#fff" d="M64.001 51.429h18.302l1.264-14.163H64.001V23.435h34.682l-.332 3.711-3.4 38.114H64.001z"/>
-        <path fill="#EBEBEB" d="M64.083 87.349l-.061.018-15.403-4.159-.985-11.031H33.752l1.937 21.717 28.331 7.863.063-.018z"/>
-        <path fill="#fff" d="M81.127 64.675l-1.666 18.522-15.426 4.164v14.39l28.354-7.858.208-2.337 2.406-26.881z"/>
-        <path fill="#EBEBEB" d="M64.048 23.435v13.831H30.64l-.277-3.108-.63-7.012-.331-3.711zm-.047 27.994v13.831H48.792l-.277-3.108-.631-7.012-.33-3.711z"/>
-      </svg>
-    ),
-  },
-  {
-    name: "React",
-    icon: (
-      <svg viewBox="0 0 128 128" className="w-10 h-10">
-        <g fill="#61DAFB">
-          <circle cx="64" cy="64" r="11.4"/>
-          <path d="M107.3 45.2c-2.2-.8-4.5-1.6-6.9-2.3.6-2.4 1.1-4.8 1.5-7.1 2.1-13.2-.2-22.5-6.6-26.1-1.9-1.1-4-1.6-6.4-1.6-7 0-15.9 5.2-24.9 13.9-9-8.7-17.9-13.9-24.9-13.9-2.4 0-4.5.5-6.4 1.6-6.4 3.7-8.7 13-6.6 26.1.4 2.3.9 4.7 1.5 7.1-2.4.7-4.7 1.4-6.9 2.3C8.2 50 1.4 56.6 1.4 64s6.9 14 19.3 18.8c2.2.8 4.5 1.6 6.9 2.3-.6 2.4-1.1 4.8-1.5 7.1-2.1 13.2.2 22.5 6.6 26.1 1.9 1.1 4 1.6 6.4 1.6 7.1 0 16-5.2 24.9-13.9 9 8.7 17.9 13.9 24.9 13.9 2.4 0 4.5-.5 6.4-1.6 6.4-3.7 8.7-13 6.6-26.1-.4-2.3-.9-4.7-1.5-7.1 2.4-.7 4.7-1.4 6.9-2.3 12.5-4.8 19.3-11.4 19.3-18.8s-6.8-14-19.3-18.8zM92.5 14.7c4.1 2.4 5.5 9.8 3.8 20.3-.3 2.1-.8 4.3-1.4 6.6-5.2-1.2-10.7-2-16.5-2.5-3.4-4.8-6.9-9.1-10.4-13 7.4-7.3 14.9-12.3 21-12.3 1.3 0 2.5.3 3.5.9zM81.3 74c-1.8 3.2-3.9 6.4-6.1 9.6-3.7.3-7.4.4-11.2.4-3.9 0-7.6-.1-11.2-.4-2.2-3.2-4.2-6.4-6-9.6-1.9-3.3-3.7-6.7-5.3-10 1.6-3.3 3.4-6.7 5.3-10 1.8-3.2 3.9-6.4 6.1-9.6 3.7-.3 7.4-.4 11.2-.4 3.9 0 7.6.1 11.2.4 2.2 3.2 4.2 6.4 6 9.6 1.9 3.3 3.7 6.7 5.3 10-1.7 3.3-3.4 6.6-5.3 10zm8.3-3.3c1.5 3.5 2.7 6.9 3.8 10.3-3.4.8-7 1.4-10.8 1.9 1.2-1.9 2.5-3.9 3.6-6 1.2-2.1 2.3-4.2 3.4-6.2zM64 97.8c-2.4-2.6-4.7-5.4-6.9-8.3 2.3.1 4.6.2 6.9.2 2.3 0 4.6-.1 6.9-.2-2.2 2.9-4.5 5.7-6.9 8.3zm-18.6-15c-3.8-.5-7.4-1.1-10.8-1.9 1.1-3.3 2.3-6.8 3.8-10.3 1.1 2 2.2 4.1 3.4 6.1 1.2 2.2 2.4 4.1 3.6 6.1zm-7-25.5c-1.5-3.5-2.7-6.9-3.8-10.3 3.4-.8 7-1.4 10.8-1.9-1.2 1.9-2.5 3.9-3.6 6-1.2 2.1-2.3 4.2-3.4 6.2zM64 30.2c2.4 2.6 4.7 5.4 6.9 8.3-2.3-.1-4.6-.2-6.9-.2-2.3 0-4.6.1-6.9.2 2.2-2.9 4.5-5.7 6.9-8.3zm22.2 21l-3.6-6c3.8.5 7.4 1.1 10.8 1.9-1.1 3.3-2.3 6.8-3.8 10.3-1.1-2.1-2.2-4.2-3.4-6.2zM31.7 35c-1.7-10.5-.3-17.9 3.8-20.3 1-.6 2.2-.9 3.5-.9 6 0 13.5 4.9 21 12.3-3.5 3.8-7 8.2-10.4 13-5.8.5-11.3 1.4-16.5 2.5-.6-2.3-1-4.5-1.4-6.6zM7 64c0-4.7 5.7-9.7 15.7-13.4 2-.8 4.2-1.5 6.4-2.1 1.6 5 3.6 10.3 6 15.6-2.4 5.3-4.5 10.5-6 15.5C15.3 75.6 7 69.6 7 64zm28.5 49.3c-4.1-2.4-5.5-9.8-3.8-20.3.3-2.1.8-4.3 1.4-6.6 5.2 1.2 10.7 2 16.5 2.5 3.4 4.8 6.9 9.1 10.4 13-7.4 7.3-14.9 12.3-21 12.3-1.3 0-2.5-.3-3.5-.9zM96.3 93c1.7 10.5.3 17.9-3.8 20.3-1 .6-2.2.9-3.5.9-6 0-13.5-4.9-21-12.3 3.5-3.8 7-8.2 10.4-13 5.8-.5 11.3-1.4 16.5-2.5.6 2.3 1 4.5 1.4 6.6zm9-15.6c-2 .8-4.2 1.5-6.4 2.1-1.6-5-3.6-10.3-6-15.6 2.4-5.3 4.5-10.5 6-15.5 13.8 4 22.1 10 22.1 15.6 0 4.7-5.8 9.7-15.7 13.4z"/>
-        </g>
-      </svg>
-    ),
-  },
-  {
-    name: "Tailwind CSS",
-    icon: (
-      <svg viewBox="0 0 128 128" className="w-10 h-10">
-        <path fill="#38BDF8" d="M64.004 25.602c-17.067 0-27.73 8.53-32 25.597 6.398-8.531 13.867-11.73 22.398-9.597 4.871 1.214 8.352 4.746 12.207 8.66C72.883 56.629 80.145 64 96.004 64c17.066 0 27.73-8.531 32-25.602-6.399 8.536-13.867 11.735-22.399 9.602-4.87-1.215-8.347-4.746-12.207-8.66-6.27-6.367-13.53-13.738-29.394-13.738zM32.004 64c-17.066 0-27.73 8.531-32 25.602C6.402 81.066 13.87 77.867 22.402 80c4.871 1.215 8.352 4.746 12.207 8.66 6.274 6.367 13.536 13.738 29.395 13.738 17.066 0 27.73-8.53 32-25.597-6.399 8.531-13.867 11.73-22.399 9.597-4.87-1.214-8.347-4.746-12.207-8.66C55.128 71.371 47.868 64 32.004 64z"/>
-      </svg>
-    ),
-  },
-  {
-    name: "Bootstrap",
-    icon: (
-      <svg viewBox="0 0 128 128" className="w-10 h-10">
-        <defs><linearGradient id="bootstrap-a" x1="76.079" x2="523.48" y1="10.798" y2="365.95" gradientTransform="translate(1.11 14.613) scale(.24566)" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#9013fe"/><stop offset="1" stopColor="#6610f2"/></linearGradient></defs>
-        <path fill="url(#bootstrap-a)" d="M14.985 27.712c-.237-6.815 5.072-13.099 12.249-13.099h73.54c7.177 0 12.486 6.284 12.249 13.099-.228 6.546.068 15.026 2.202 21.94 2.141 6.936 5.751 11.319 11.664 11.883v6.387c-5.913.564-9.523 4.947-11.664 11.883-2.134 6.914-2.43 15.394-2.202 21.94.237 6.815-5.072 13.098-12.249 13.098h-73.54c-7.177 0-12.486-6.284-12.249-13.098.228-6.546-.068-15.026-2.203-21.94-2.14-6.935-5.76-11.319-11.673-11.883v-6.387c5.913-.563 9.533-4.947 11.673-11.883 2.135-6.914 2.43-15.394 2.203-21.94z"/>
-        <path fill="#FFF" fillRule="evenodd" d="M96.7 92.5c23.6 0 37.8-11.5 37.8-30.6 0-14.4-10.1-24.8-25.2-26.5v-.6c11.1-1.8 19.8-12.1 19.8-23.5 0-16.4-12.9-27-32.6-27H51.4v108.2h45.3zm-27.2-94.5H92c12.4 0 19.5 5.6 19.5 15.6 0 10.7-8.2 16.7-23.1 16.7H69.5V-2zm0 80.8V43.2H92c16.3 0 24.8 6 24.8 17.7 0 11.7-8.2 17.9-23.7 17.9H69.5z" transform="translate(-19.3 -13.2) scale(.62)"/>
-      </svg>
-    ),
-  },
-  {
-    name: "Git",
-    icon: (
-      <svg viewBox="0 0 128 128" className="w-10 h-10">
-        <path fill="#F34F29" d="M124.737 58.378L69.621 3.264c-3.172-3.174-8.32-3.174-11.497 0L46.68 14.71l14.518 14.518c3.375-1.139 7.243-.375 9.932 2.314 2.703 2.706 3.461 6.607 2.294 9.993l13.992 13.993c3.385-1.167 7.292-.413 9.994 2.295 3.78 3.777 3.78 9.9 0 13.679a9.673 9.673 0 01-13.683 0 9.677 9.677 0 01-2.105-10.521L68.574 47.933l-.002 34.341a9.708 9.708 0 012.559 1.828c3.778 3.777 3.778 9.898 0 13.683-3.779 3.777-9.904 3.777-13.679 0-3.778-3.784-3.778-9.905 0-13.683a9.65 9.65 0 013.167-2.11V47.333a9.581 9.581 0 01-3.167-2.111c-2.862-2.86-3.551-7.06-2.083-10.576L41.056 20.333 3.264 58.123a8.133 8.133 0 000 11.5l55.117 55.114c3.174 3.174 8.32 3.174 11.499 0l54.858-54.858a8.135 8.135 0 00-.001-11.501z"/>
-      </svg>
-    ),
-  },
-  {
-    name: "GitHub",
-    icon: (
-      <svg viewBox="0 0 128 128" className="w-10 h-10">
-        <g fill="#fff">
-          <path fillRule="evenodd" clipRule="evenodd" d="M64 5.103c-33.347 0-60.388 27.035-60.388 60.388 0 26.682 17.303 49.317 41.297 57.303 3.017.56 4.125-1.31 4.125-2.905 0-1.44-.056-6.197-.082-11.243-16.8 3.653-20.345-7.125-20.345-7.125-2.747-6.98-6.705-8.836-6.705-8.836-5.48-3.748.413-3.67.413-3.67 6.063.425 9.257 6.223 9.257 6.223 5.386 9.23 14.127 6.562 17.573 5.02.542-3.903 2.107-6.568 3.834-8.076-13.413-1.525-27.514-6.704-27.514-29.843 0-6.593 2.36-11.98 6.223-16.21-.628-1.52-2.695-7.662.584-15.98 0 0 5.07-1.623 16.61 6.19C53.7 35 58.867 34.327 64 34.304c5.13.023 10.3.694 15.127 2.033 11.526-7.813 16.59-6.19 16.59-6.19 3.287 8.317 1.22 14.46.593 15.98 3.872 4.23 6.215 9.617 6.215 16.21 0 23.194-14.127 28.3-27.574 29.796 2.167 1.874 4.097 5.55 4.097 11.183 0 8.08-.07 14.583-.07 16.572 0 1.607 1.088 3.49 4.148 2.897 23.98-7.994 41.263-30.622 41.263-57.294C124.388 32.14 97.35 5.104 64 5.104z"/>
-          <path d="M26.484 91.806c-.133.3-.605.39-1.035.185-.44-.196-.685-.605-.543-.906.13-.31.603-.395 1.04-.188.44.197.69.61.537.91zm2.446 2.729c-.287.267-.85.143-1.232-.28-.396-.42-.47-.983-.177-1.254.298-.266.844-.14 1.24.28.394.426.472.984.17 1.255zm2.382 3.477c-.37.258-.976.017-1.35-.52-.37-.538-.37-1.183.01-1.44.373-.258.97-.025 1.35.507.368.545.368 1.19-.01 1.452zm3.261 3.361c-.33.365-1.036.267-1.552-.23-.527-.487-.674-1.18-.343-1.544.336-.366 1.045-.264 1.564.23.527.486.686 1.18.333 1.543zm4.5 1.951c-.147.473-.825.688-1.51.486-.683-.207-1.13-.76-.99-1.238.14-.477.823-.7 1.512-.485.683.206 1.13.756.988 1.237zm4.943.361c.017.498-.563.91-1.28.92-.723.017-1.308-.387-1.315-.877 0-.503.568-.91 1.29-.924.717-.013 1.306.387 1.306.88zm4.598-.782c.086.485-.413.984-1.126 1.117-.7.13-1.35-.172-1.44-.653-.086-.498.422-.997 1.122-1.126.714-.123 1.354.17 1.444.663zm0 0"/>
-        </g>
-      </svg>
-    ),
-  },
-  {
-    name: "VS Code",
-    icon: (
-      <svg viewBox="0 0 128 128" className="w-10 h-10">
-        <path fill="#007ACC" d="M93.3 12.3L37.1 50.5l-21.5-17.8L0 42.4 34 64 0 85.6l15.6 9.7 21.5-17.8 56.2 38.2c4.4 2.8 10 1.2 10-3.6V15.9c0-4.8-5.6-6.4-10-3.6zM83.9 92.5L50.4 68.7l33.5-27.1v50.9z"/>
-      </svg>
-    ),
-  },
-  {
-    name: "WordPress",
-    icon: (
-      <svg viewBox="0 0 128 128" className="w-10 h-10">
-        <path fill="#00749C" d="M64.094 126.224c34.275-.052 62.021-27.933 62.021-62.325 0-33.574-26.617-60.894-59.903-62.261.226-.005.451-.014.678-.014 34.523 0 62.507 27.984 62.507 62.507 0 34.522-27.984 62.507-62.507 62.507-.452 0-.9-.014-1.349-.028.186.009.371.021.558.021-.002-.136-.005-.271-.005-.407z"/>
-        <path fill="#21759B" d="M64.094 126.224c.186.009.372.021.559.021V.015c-.187 0-.372-.009-.559-.014v.014c-.226 0-.451.009-.677.014v126.181c.226.014.451.028.677.028v-.014z"/>
-        <path fill="#00749C" d="M1.597 63.899c0 25.399 14.767 47.358 36.168 57.784L6.545 37.2c-3.168 8.133-4.948 17.028-4.948 26.699z"/>
-        <path fill="#21759B" d="M79.763 61.125c0-7.93-2.849-13.424-5.287-17.698-3.248-5.285-6.295-9.755-6.295-15.041 0-5.89 4.469-11.38 10.769-11.38.284 0 .553.035.828.052C72.131 10.19 62.56 5.81 51.97 5.81c-14.16 0-26.61 7.259-33.883 18.267 3.51.109 6.815.18 9.615.18 6.207 0 15.812-.754 15.812-.754 3.198-.188 3.577 4.509.385 4.886 0 0-3.218.378-6.794.566l21.614 64.3L70.94 54.418l-8.224-22.514c-3.197-.188-6.226-.566-6.226-.566-3.197-.188-2.823-5.073.379-4.886 0 0 9.798.755 15.621.755 6.207 0 15.812-.754 15.812-.754 3.198-.188 3.577 4.509.384 4.886 0 0-3.218.378-6.794.566l21.457 63.834 5.93-19.815c2.549-8.194 4.484-14.069 4.484-19.149z"/>
-        <path fill="#00749C" d="M65.499 69.095L47.669 120.78c5.323 1.562 10.942 2.422 16.764 2.422 6.907 0 13.539-1.196 19.712-3.371-.157-.254-.302-.52-.423-.818L65.499 69.095z"/>
-        <path fill="#21759B" d="M113.777 31.914a53.39 53.39 0 012.621 16.585c0 16.331-6.104 34.652-24.43 57.112l.095-.055C111.25 94.839 124.4 80.609 124.4 63.9c0-11.695-4.006-22.461-10.623-31.081v-.905z"/>
-        <path fill="#00749C" d="M64.9 0C29.227.033.255 29.037.255 64.719c0 35.681 28.972 64.686 64.645 64.686.357 0 .712-.012 1.068-.021-.068 0-.135.005-.202.005C31.168 129.389 0 98.203 0 63.605 0 28.996 31.168-2.2 65.766-2.2c-.289.002-.579-.003-.866.002v.002c.289-.001.579-.003.869-.002l-.014-.001c-.286.002-.571.009-.855.015v.014l-.003.017c.001.053.003.107.003.163z"/>
-      </svg>
-    ),
-  },
-  {
-    name: "WooCommerce",
-    icon: (
-      <svg viewBox="0 0 128 128" className="w-10 h-10">
-        <path fill="#96588A" d="M64 8.7c-31 0-56 22-56 49.3 0 16.2 9 30.6 22.9 39.4-1.6 8.3-5.4 15.5-11.6 21 7.2-.6 14.1-3.2 20.2-7.5 7.6 2 15.8 3.1 24.4 3.1 31 0 56-22 56-49.3S95 8.7 64 8.7z"/>
-        <path fill="#FFF" d="M36.1 48c-3 0-5.5 2.5-5.5 5.5S33 59 36.1 59s5.5-2.5 5.5-5.5-2.5-5.5-5.5-5.5zm27.9 0c-3 0-5.5 2.5-5.5 5.5S61 59 64 59s5.5-2.5 5.5-5.5S67 48 64 48zm27.9 0c-3 0-5.5 2.5-5.5 5.5S88.9 59 91.9 59s5.5-2.5 5.5-5.5-2.4-5.5-5.5-5.5z"/>
-      </svg>
-    ),
-  },
-  {
-    name: "Shopify",
-    icon: (
-      <svg viewBox="0 0 128 128" className="w-10 h-10">
-        <path fill="#95BF47" d="M37.5 35.8l-5.6-11.4c-1.4-2.8-5.1-4-8-2.6-2.8 1.4-4 5.1-2.6 8l10.9 22-8.3 64.9c-.4 3.1 1.8 6 4.9 6.4.4 0 .8.1 1.2.1h69.2c3 0 5.6-2.3 6.1-5.3l11.4-65.7c.6-3.2-1.6-6.2-4.8-6.7-.4-.1-.8-.1-1.3-.1H37.5z"/>
-        <path fill="#5E8E3E" d="M110.5 49.3L99.1 115h-1.8L108 50.7H37.5l-2.4-4.8c-1.4-2.8-5.1-4-8-2.6L19 47.3l8.3 64.9c.4 3.1 3 5.4 6.1 5.4h1.8c-3 0-5.6-2.3-6.1-5.3l-8.3-64.9 8.1-4 2.4 4.8h80.4c2.8 0 5.2 2 5.8 4.7-1-.6-2.1-1-3.4-1z"/>
-        <path fill="#FFF" d="M73 66.8c-.8-1.4-2.3-2-4.9-2.3-3.6-.5-4.4-1.3-4.4-2.8 0-1.2 1.3-2 3.6-2 2.8 0 5.3.7 7.7 2.1l2.3-5.8c-3.1-1.8-6.7-2.6-10.4-2.6-6.5 0-11 3.2-11 8.6 0 4.3 2.7 6.8 8.1 7.6 3.4.5 4 1.5 4 2.9 0 1.5-1.5 2.5-4 2.5-3.6 0-7-1.4-9.6-3.7L51.9 77c3.4 2.6 7.7 3.8 12.3 3.8 6.8 0 12-3.2 12-9-.1-3.2-1.4-5.2-3.2-5z"/>
-      </svg>
-    ),
-  },
-  {
-    name: "Elementor",
-    icon: (
-      <svg viewBox="0 0 128 128" className="w-10 h-10">
-        <circle cx="64" cy="64" r="64" fill="#92003B"/>
-        <path fill="#FFF" d="M40 37.33h10.67v53.34H40zm21.33 0H88v10.67H61.33zm0 21.34H88v10.67H61.33zm0 21.33H88v10.67H61.33z"/>
-      </svg>
-    ),
-  },
-  {
-    name: "Canva",
-    icon: (
-      <svg viewBox="0 0 128 128" className="w-10 h-10">
-        <defs><radialGradient id="canva-a" cx="43.352" cy="115.684" r="99.217" gradientUnits="userSpaceOnUse"><stop offset=".01" stopColor="#00c4cc"/><stop offset=".26" stopColor="#00a2d0"/><stop offset=".66" stopColor="#7d2ae8"/><stop offset="1" stopColor="#ff59a9"/></radialGradient></defs>
-        <circle cx="64" cy="64" r="60" fill="url(#canva-a)"/>
-        <path fill="#fff" d="M92.3 71c-2.6 10.5-10.5 18.5-22 21-7.2 1.6-14.6.7-21.4-2.4-10-4.6-17.4-14.4-18.8-25.8-1.3-10.7 2-20.5 8.2-28.2 4.8-6 11.3-10.5 18.4-13 7.8-2.7 16.3-2.4 24.2.5 8.3 3 15.5 9.3 19 17.5 1.7 3.9 2.5 8.2 2.4 12.5 0 3.5-1 9-6.3 11.7-4.5 2.3-10 .6-12.5-4-2.5-4.5-.6-10 4-12.5 1.3-.7 2.8-1 4.3-1l.7.1c-1-4.6-4-9-8.6-11.8-5-3-11-3.4-16.5-1.4-7.3 2.7-12.7 9.7-14 17.6-1.5 9 2 17.5 8.4 22.6 5.2 4.2 12.3 5.8 19.2 4 6.3-1.7 11.5-5.8 14-11.3.7-1.5 2.5-2.2 4-1.5s2.2 2.5 1.5 4c-3.2 6.8-9.6 12-17.2 14.2-8.8 2.4-18-.2-24.5-5.5-7.7-6.3-12-16.4-10.2-27.4 1.6-9.7 8.3-18.4 17.2-21.7 7-2.6 14.6-2 21 1.8 6.7 4 11.2 10.8 12 18.5.3 3.2-.1 6.5-1.2 9.4-1.5 3.8-4.4 6.8-8 8.5-2.2 1-4.6 1.5-7 1.4-2.4-.1-4.6-.8-6.5-2-2.5-1.6-4.2-4-5-6.7-1.6-5.4.5-11 5.2-14 5.2-3.3 12-.6 14.8 5 .2.3.3.6.5.9.6.3 1.2.5 1.8.6 1.7.2 3.5-.4 4.8-1.5 1.2-1 2-2.5 2.2-4.1.4-3.2-.4-6.6-2.1-9.4-3.2-5.4-9.3-8.8-16.2-9-5.8-.2-11.3 2.3-15.2 6-6.5 6.3-8.6 15.8-6.2 24.3 2 7 7.2 12.5 14 15.2 5.5 2.2 11.6 2.5 17.3 1 8.5-2.2 15.4-8.8 18.4-17 1-2.8 1.5-5.7 1.5-8.7 0-4.6-1.1-9.3-3.3-13.4-4.6-8.5-13.2-14.4-23-16.4-8-.2-15.7 2-22.4 6-11 6.6-18.5 18.4-19.6 31.4-.6 6.6.5 13.3 3.2 19.4 5 11.3 15 19.3 27.4 22 9.7 2.1 20-.1 28-5.8 5.2-3.7 9.3-8.7 11.8-14.6.5-1.3 2-1.8 3.2-1.3 1.3.5 1.8 2 1.3 3.2v.1c-3 7-8 13-14.4 17.3-9.5 6.5-21.4 9-32.7 6.6-14.2-3-25.7-12.5-31.4-25.3-3-6.8-4.3-14.4-3.6-21.8 1.3-14.8 9.8-28.3 22.4-35.8 7.6-4.5 16.4-7 25.4-6.8 11.2 2.2 21.2 9 26.6 18.8 2.5 4.5 3.8 9.8 3.8 15 0 3.5-.5 7-1.7 10.3z"/>
-      </svg>
-    ),
-  },
-  {
-    name: "Figma",
-    icon: (
-      <svg viewBox="0 0 128 128" className="w-10 h-10">
-        <path fill="#0ACF83" d="M45.5 129c11.9 0 21.5-9.6 21.5-21.5V86H45.5C33.6 86 24 95.6 24 107.5S33.6 129 45.5 129z"/>
-        <path fill="#A259FF" d="M24 64.5C24 52.6 33.6 43 45.5 43H67v43H45.5C33.6 86 24 76.4 24 64.5z"/>
-        <path fill="#F24E1E" d="M24 21.5C24 9.6 33.6 0 45.5 0H67v43H45.5C33.6 43 24 33.4 24 21.5z"/>
-        <path fill="#FF7262" d="M67 0h21.5C100.4 0 110 9.6 110 21.5S100.4 43 88.5 43H67V0z"/>
-        <path fill="#1ABCFE" d="M110 64.5c0 11.9-9.6 21.5-21.5 21.5S67 76.4 67 64.5 76.6 43 88.5 43 110 52.6 110 64.5z"/>
-      </svg>
-    ),
-  },
+const ALL_SKILLS = [...new Set(SKILL_CATEGORIES.flatMap((c) => c.skills))];
+
+const ORBITS = [
+  ['React', 'TypeScript', 'JavaScript', 'Tailwind CSS', 'Next.js', 'Redux'],
+  ['Shopify', 'WordPress', 'Liquid', 'Node.js', 'PostgreSQL', 'MongoDB'],
+  ['Docker', 'Git', 'GitHub', 'AWS', 'REST APIs', 'Postman'],
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.05,
-    },
-  },
-};
+function projectsUsing(skill: string): string[] {
+  const s = skill.toLowerCase().replace(/\.js$/, '');
+  return projects
+    .filter((p) =>
+      p.tech.some(
+        (t) =>
+          t.toLowerCase().replace(/\.js$/, '') === s ||
+          t.toLowerCase().includes(s) ||
+          s.includes(t.toLowerCase()),
+      ),
+    )
+    .map((p) => p.title);
+}
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20, scale: 0.9 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.4 },
-  },
-};
+function SkillChip({ name, i }: { name: string; i: number }) {
+  const reduce = useReducedMotion();
+  const used = projectsUsing(name);
 
-const SkillsSection = () => {
   return (
-    <section id="skills" className="py-12 relative">
-      <div className="absolute inset-0 animated-bg opacity-50" />
+    <motion.li
+      initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
+      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      exit={{ opacity: 0, y: -12, filter: 'blur(4px)', transition: { duration: 0.25 } }}
+      transition={{ duration: 0.7, delay: i * 0.05, ease: EASE }}
+      className="list-none"
+    >
+      <motion.div
+        animate={reduce ? undefined : { y: [0, -5, 0] }}
+        transition={{ duration: 4 + (i % 3), repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 }}
+      >
+        <Magnetic strength={0.4}>
+          <div className="group relative rounded-full border border-line bg-bg px-5 py-3 text-[clamp(1rem,1.5vw,1.25rem)] tracking-[-0.02em] transition-colors duration-300 hover:border-fg hover:bg-fg hover:text-bg cursor-default">
+            {name}
+            {used.length > 0 && (
+              <span className="pointer-events-none absolute top-full left-1/2 z-20 mt-2 w-max max-w-[240px] -translate-x-1/2 translate-y-1 rounded-md border border-line bg-surface px-3 py-2 font-mono text-[10px] leading-relaxed tracking-[0.06em] text-muted opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 shadow-2xl">
+                Used in {used.slice(0, 2).join(', ')}
+              </span>
+            )}
+          </div>
+        </Magnetic>
+      </motion.div>
+    </motion.li>
+  );
+}
 
-      <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-10"
-        >
-          <h2 className="section-title">
-            Skills & <span className="text-primary text-glow">Expertise</span>
-          </h2>
-          <p className="section-subtitle">
-            Technologies and tools I use to bring ideas to life
-          </p>
-        </motion.div>
+export default function SkillsSection() {
+  const [active, setActive] = useState(SKILL_CATEGORIES[0].id);
+  const cat = SKILL_CATEGORIES.find((c) => c.id === active) || SKILL_CATEGORIES[0];
 
-        {/* Programming Languages */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16"
+  return (
+    <section id="skills" className="relative px-4 py-14 md:px-8 md:py-20 font-sans" aria-labelledby="expertise-title">
+      {/* 02 — EXPERTISE Section Title matching theme_changing_portfolio */}
+      <div className="mb-10 grid gap-8 md:mb-14 md:grid-cols-12">
+        <div className="md:col-span-4">
+          <SectionLabel index="02">Expertise</SectionLabel>
+        </div>
+        <div className="md:col-span-8">
+          <SplitText
+            as="h2"
+            text="Skills & Expertise"
+            className="block text-[clamp(2.4rem,6vw,5.6rem)] leading-[0.95] font-medium tracking-[-0.05em] text-fg"
+          />
+          <Reveal delay={0.2}>
+            <p className="mt-6 max-w-[46ch] text-muted text-[clamp(1rem,1.2vw,1.15rem)] leading-relaxed">
+              Technologies and tools I use to bring ideas to life
+            </p>
+          </Reveal>
+        </div>
+      </div>
+
+      {/* 3D Tech Orbit (Full bleed stage) */}
+      <Reveal className="-mx-4 mb-12 md:-mx-8 md:mb-16">
+        <TechOrbit rings={ORBITS} label="Pronoy's skills in orbit" />
+        <p className="mt-2 text-center font-mono text-[10px] tracking-[0.22em] text-faint uppercase">
+          Scroll or drag to turn me · {ALL_SKILLS.length} skills in orbit
+        </p>
+      </Reveal>
+
+      {/* Interactive Category Tabs (Full width 12-col grid) */}
+      <div className="grid gap-12 md:grid-cols-12 md:gap-6">
+        {/* Left: Tablist */}
+        <div
+          role="tablist"
+          aria-label="Skill categories"
+          aria-orientation="vertical"
+          className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 md:col-span-5 md:mx-0 md:block md:overflow-visible md:px-0 md:pb-0"
         >
-          <h3 className="text-xl font-semibold text-center text-primary mb-10">
-            Programming Languages
-          </h3>
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="flex flex-wrap justify-center gap-6 md:gap-8"
-          >
-            {programmingLanguages.map((skill) => (
-              <motion.div
-                key={skill.name}
-                variants={itemVariants}
-                whileHover={{ 
-                  scale: 1.1, 
-                  y: -8,
-                  boxShadow: "0 20px 40px -10px hsla(340, 50%, 43%, 0.3)"
-                }}
-                className="skill-icon group relative"
+          {SKILL_CATEGORIES.map((c) => {
+            const on = c.id === active;
+            return (
+              <button
+                key={c.id}
+                role="tab"
+                id={`tab-${c.id}`}
+                aria-selected={on}
+                aria-controls="skills-panel"
+                onMouseEnter={() => setActive(c.id)}
+                onFocus={() => setActive(c.id)}
+                onClick={() => setActive(c.id)}
+                className={`group relative flex shrink-0 items-baseline gap-4 rounded-full border px-4 py-2 text-left transition-colors duration-500 md:w-full md:rounded-none md:border-0 md:border-t md:px-0 md:py-6 ${
+                  on ? 'border-fg md:border-line' : 'border-line'
+                }`}
               >
-                <div className="text-center flex flex-col items-center">
-                  <motion.div 
-                    className="mb-3"
-                    whileHover={{ rotate: [0, -5, 5, 0] }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {skill.icon}
-                  </motion.div>
-                  <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors font-medium">
-                    {skill.name}
-                  </p>
-                </div>
-                {/* Glow effect on hover */}
-                <div className="absolute inset-0 rounded-xl bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity blur-xl -z-10" />
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
+                <span
+                  className={`hidden font-mono text-xs transition-colors md:inline ${
+                    on ? 'text-fg font-medium' : 'text-faint'
+                  }`}
+                >
+                  {c.index}
+                </span>
+                <span
+                  className={`text-[15px] whitespace-nowrap transition-all duration-500 ease-out md:text-[clamp(1.6rem,2.8vw,2.6rem)] md:tracking-[-0.04em] ${
+                    on ? 'text-fg md:translate-x-3' : 'text-muted group-hover:text-fg'
+                  }`}
+                >
+                  {on ? <span className="md:font-serif md:italic font-normal">{c.title}</span> : c.title}
+                </span>
+                {on && (
+                  <motion.span
+                    layoutId="skill-bar"
+                    className="absolute top-[-1px] left-0 hidden h-px w-full bg-fg md:block"
+                    transition={{ duration: 0.6, ease: EASE }}
+                  />
+                )}
+              </button>
+            );
+          })}
+        </div>
 
-        {/* Technologies & Tools */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <h3 className="text-xl font-semibold text-center text-primary mb-10">
-            Technologies & Tools
-          </h3>
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 md:gap-6 max-w-4xl mx-auto"
-          >
-            {technologies.map((tech) => (
-              <motion.div
-                key={tech.name}
-                variants={itemVariants}
-                whileHover={{ 
-                  scale: 1.1, 
-                  y: -8,
-                  boxShadow: "0 20px 40px -10px hsla(340, 50%, 43%, 0.3)"
-                }}
-                className="skill-icon group relative"
+        {/* Right: Sticky Active Tab Panel */}
+        <div className="md:col-span-6 md:col-start-7">
+          <div className="md:sticky md:top-32">
+            <div
+              id="skills-panel"
+              role="tabpanel"
+              aria-labelledby={`tab-${cat.id}`}
+              className="relative min-h-[340px] rounded-[2px] border border-line p-6 md:p-10"
+            >
+              {/* Giant faint outline index number in top right corner */}
+              <span
+                aria-hidden="true"
+                className="text-outline pointer-events-none absolute -top-6 right-4 font-serif text-[9rem] leading-none italic select-none md:text-[12rem]"
               >
-                <div className="text-center flex flex-col items-center">
-                  <motion.div 
-                    className="mb-3"
-                    whileHover={{ rotate: [0, -5, 5, 0] }}
-                    transition={{ duration: 0.3 }}
+                {cat.index}
+              </span>
+              <AnimatePresence mode="wait">
+                <motion.div key={cat.id} className="relative z-10">
+                  <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5, ease: EASE }}
+                    className="max-w-[36ch] text-muted text-[clamp(1rem,1.2vw,1.15rem)] leading-relaxed"
                   >
-                    {tech.icon}
-                  </motion.div>
-                  <p className="text-xs text-muted-foreground group-hover:text-foreground transition-colors font-medium">
-                    {tech.name}
-                  </p>
-                </div>
-                {/* Glow effect on hover */}
-                <div className="absolute inset-0 rounded-xl bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity blur-xl -z-10" />
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
+                    {cat.blurb}
+                  </motion.p>
+                  <ul className="mt-10 flex flex-wrap gap-3">
+                    {cat.skills.map((s, i) => (
+                      <SkillChip key={s} name={s} i={i} />
+                    ))}
+                  </ul>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
-};
-
-export default SkillsSection;
+}

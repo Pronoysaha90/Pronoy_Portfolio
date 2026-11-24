@@ -11,8 +11,8 @@ const footerLinks = [
 
 const Footer = () => {
   return (
-    <footer className="relative border-t border-white/5 bg-transparent">
-      <div className="container mx-auto px-6 py-10 max-w-5xl">
+    <footer className="relative border-t border-white/5 bg-transparent font-sans">
+      <div className="container mx-auto px-6 py-10">
         {/* Top Row */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8">
           {/* Left: Name & Title */}
